@@ -6,8 +6,8 @@ import CartProvider from "./providers/CartProvider";
 import Footer from "./components/Footer";
 
 export const metadata = {
-  title: "Nkozi Mart - Marketplace",
-  description: "Buy and sell anything easily.",
+  title: "Shami Global Shop",
+  description: "Shop the world. Delivered to Uganda.",
   // Add the manifest link here to enable Progressive Web App (PWA) features
   manifest: "/manifest.json",
 };

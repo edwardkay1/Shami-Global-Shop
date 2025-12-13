@@ -1,10 +1,10 @@
 'use client';
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useMemo } from "react";
 import Image from "next/image";
 import Link from "next/link";
 // --- Cleaned Imports ---
-import { Menu, Search, ShoppingCart, Home, User, Heart, Star, ChevronLeft, ChevronRight, Plus, X } from "lucide-react"; 
+import { Menu, Search, ShoppingCart, Home, Star, ChevronLeft, ChevronRight, Plus, X } from "lucide-react"; 
 import { useCart } from "./providers/CartProvider";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { db } from "./firebase/config.js";
@@ -63,20 +63,22 @@ const formatPrice = (price) => {
 };
 
 
-// --- CARD COMPONENT (Kept unchanged) ---
-const ProductCard = ({ item, seller, addToCart }) => {
+// --- CARD COMPONENTS ---
+
+const RatingStars = () => (
+    <div className="flex my-1 text-xs text-yellow-500">
+        <Star size={12} fill="currentColor" />
+        <Star size={12} fill="currentColor" />
+        <Star size={12} fill="currentColor" />
+        <Star size={12} fill="currentColor" className="opacity-50" />
+        <Star size={12} className="text-gray-300" />
+    </div>
+);
+
+// Standard Product Card (for main grid)
+const ProductCard = ({ item, addToCart }) => {
     const mainName = item.name || "Product Name";
-    const subName = item.category || "Men's Shoes";
-    
-    const RatingStars = () => (
-        <div className="flex my-1 text-xs text-yellow-500">
-            <Star size={12} fill="currentColor" />
-            <Star size={12} fill="currentColor" />
-            <Star size={12} fill="currentColor" />
-            <Star size={12} fill="currentColor" className="opacity-50" />
-            <Star size={12} className="text-gray-300" />
-        </div>
-    );
+    const subName = item.category || "General Item";
     
     return (
         <div
@@ -118,6 +120,54 @@ const ProductCard = ({ item, seller, addToCart }) => {
     );
 };
 
+// New Card for Horizontal Slider (includes 'NEW' tag)
+const LatestProductCard = ({ item, addToCart }) => {
+    const mainName = item.name || "Product Name";
+    const subName = item.category || "New Arrival";
+    
+    return (
+        <div
+            key={item.id}
+            className="flex-shrink-0 w-44 p-2.5 transition-shadow duration-300 bg-white rounded-3xl shadow-lg hover:shadow-xl"
+        >
+            <div className="relative w-full mb-2 overflow-hidden h-36 rounded-2xl">
+                <Image
+                    src={item.image || "https://placehold.co/400x400/E5E7EB/4B5563?text=New"}
+                    alt={mainName}
+                    fill
+                    style={{ objectFit: 'cover' }}
+                    className="rounded-2xl"
+                    sizes="40vw"
+                    priority
+                />
+                <span className={`absolute top-2 left-2 px-2 py-0.5 text-xs font-bold text-black ${ACCENT_COLOR} rounded-full shadow-md`}>
+                    NEW
+                </span>
+            </div>
+            
+            <p className="text-xs text-gray-500 line-clamp-1">{subName}</p>
+            <p className="mb-1 text-sm font-semibold text-gray-900 line-clamp-2">
+                {mainName}
+            </p>
+            
+            <RatingStars /> 
+            
+            <div className="flex items-center justify-between pt-2 mt-auto">
+                <p className="text-sm font-bold text-gray-800">
+                    {formatPrice(item.price || 0)}
+                </p>
+                <button
+                    onClick={() => addToCart(item)}
+                    className={`p-1.5 text-white transition-colors ${PRIMARY_COLOR} rounded-lg shadow-sm hover:bg-gray-800`}
+                    title="Add to Cart"
+                >
+                    <Plus className="w-4 h-4" />
+                </button>
+            </div>
+        </div>
+    );
+};
+
 
 // --- MAIN HOME PAGE COMPONENT ---
 export default function HomePage() {
@@ -128,7 +178,7 @@ export default function HomePage() {
   
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("All"); 
-  const [sortOption, setSortOption] = useState("Latest"); 
+  // sortOption removed per request, defaults to Latest
   const [currentBannerIndex, setCurrentBannerIndex] = useState(0); 
   const [products, setProducts] = useState([]);
   const [sellers, setSellers] = useState({});
@@ -137,11 +187,9 @@ export default function HomePage() {
 
   // --- NEW: Handle Mobile Search Click ---
   const handleMobileSearchClick = () => {
-    // 1. Focus the search input field
     if (searchInputRef.current) {
       searchInputRef.current.focus();
     }
-    // 2. Optional: Scroll to the top if the search bar might be off-screen
     window.scrollTo({
       top: 0,
       behavior: 'smooth'
@@ -206,7 +254,7 @@ export default function HomePage() {
           category: doc.data().category || categories[Math.floor(Math.random() * categories.length)],
         }));
         
-        setProducts(shuffleArray(productsList));
+        setProducts(productsList); // No initial shuffle, we sort later
         
         // Fetch Sellers logic 
         const sellerIds = [...new Set(productsList.map(p => p.sellerId))];
@@ -225,29 +273,43 @@ export default function HomePage() {
     fetchData();
   }, []);
 
-  // Filter and Sort Logic 
-  const filteredProducts = products.filter((product) => {
-    const matchesCategory = selectedCategory === "All" || product.category === selectedCategory; 
+  // --- Filtering and Sorting Logic (Amazon-like Concept) ---
+  const { filteredProducts, latestProducts } = useMemo(() => {
     const lowerCaseSearchTerm = searchTerm.toLowerCase();
-    const matchesSearch = 
-      !searchTerm || 
-      product.name.toLowerCase().includes(lowerCaseSearchTerm) ||
-      (sellers[product.sellerId]?.storeName.toLowerCase().includes(lowerCaseSearchTerm)) ||
-      (product.color && product.color.toLowerCase().includes(lowerCaseSearchTerm));
-    return matchesCategory && matchesSearch;
-  });
 
-  const sortedProducts = [...filteredProducts].sort((a, b) => {
-    switch (sortOption) {
-      case "Price: Low to High":
-        return a.price - b.price;
-      case "Price: High to Low":
-        return b.price - a.price;
-      case "Latest":
-      default:
-        return b.id.localeCompare(a.id); 
+    // 1. Filter by Search Term and Category
+    let currentProducts = products.filter((product) => {
+      const matchesCategory = selectedCategory === "All" || product.category === selectedCategory; 
+      const matchesSearch = 
+        !searchTerm || 
+        product.name.toLowerCase().includes(lowerCaseSearchTerm) ||
+        (sellers[product.sellerId]?.storeName?.toLowerCase().includes(lowerCaseSearchTerm)) ||
+        (product.color && product.color.toLowerCase().includes(lowerCaseSearchTerm));
+      return matchesCategory && matchesSearch;
+    });
+
+    // 2. Default Sort (Latest) and Smart Shuffle for Recommended Grid (Main Display)
+    // The Amazon-like 'algo' here prioritizes newness and then randomizes/shuffles for variety.
+    // We assume the ID sorting is sufficient for 'Latest' since no timestamp field is defined.
+    const sortedLatest = [...products].sort((a, b) => b.id.localeCompare(a.id)); 
+    
+    // Latest Products for horizontal slider (Top 10)
+    const latest = sortedLatest.slice(0, 10);
+
+    // Main Recommended Grid (Filtered Products)
+    // Sort by latest, then apply a partial shuffle to keep the top results fresh but mixed.
+    const finalFilteredProducts = [...currentProducts].sort((a, b) => b.id.localeCompare(a.id)); 
+    // Applying a light shuffle to the first 50 results (conceptual 'relevance' shuffle)
+    if (!searchTerm && selectedCategory === "All") {
+        const topChunk = finalFilteredProducts.splice(0, 50);
+        currentProducts = shuffleArray(topChunk).concat(finalFilteredProducts);
+    } else {
+        currentProducts = finalFilteredProducts; // Keep filtered results strictly latest/relevant
     }
-  });
+
+
+    return { filteredProducts: currentProducts, latestProducts: latest };
+  }, [products, searchTerm, selectedCategory, sellers]);
 
   // --- UI IMPLEMENTATION STARTS HERE ---
 
@@ -266,7 +328,7 @@ export default function HomePage() {
               {menuOpen ? <X size={24} /> : <Menu size={24} />}
             </button>
              {/* Logo/Title for Desktop or if no menu icon needed */}
-            <Link href="/" className="hidden text-xl font-bold text-gray-800 md:block">Nkozi Mart</Link>
+            <Link href="/" className="hidden text-xl font-bold text-gray-800 md:block">Shami Global Shopper</Link>
         </div>
         
         {/* Center Section (Search Bar - Responsive) */}
@@ -405,26 +467,39 @@ export default function HomePage() {
             </div>
         </div>
 
-        {/* -------------------- 4. PRODUCT LIST/GRID -------------------- */}
+        {/* -------------------- 4. LATEST PRODUCTS (Horizontal Slide) -------------------- */}
+        {latestProducts.length > 0 && (
+            <div className="mb-10">
+                <h2 className="mb-3 text-xl font-bold text-gray-800">New Arrivals</h2>
+                <div className="flex pb-2 space-x-4 overflow-x-auto scrollbar-hide">
+                    {latestProducts.map((item) => (
+                        <LatestProductCard
+                            key={item.id}
+                            item={item}
+                            addToCart={addToCart}
+                        />
+                    ))}
+                </div>
+            </div>
+        )}
+
+        {/* -------------------- 5. MAIN PRODUCT LIST/GRID -------------------- */}
         <div>
             <div className="flex items-center justify-between mb-4">
                 <h2 className="text-xl font-bold text-gray-800">
-                    Recommended
+                    {searchTerm 
+                        ? `Search Results for "${searchTerm}"` 
+                        : selectedCategory !== "All"
+                            ? `${selectedCategory} Recommendations`
+                            : "Recommended for You"
+                    }
                 </h2>
-                <select
-                    value={sortOption}
-                    onChange={(e) => setSortOption(e.target.value)}
-                    className="px-3 py-1 text-sm text-gray-700 bg-white border border-gray-300 rounded-full shadow-sm focus:outline-none focus:ring-1 focus:ring-gray-400"
-                >
-                    <option value="Latest">Latest</option>
-                    <option value="Price: Low to High">Price: Low to High</option>
-                    <option value="Price: High to Low">Price: High to Low</option>
-                </select>
+                {/* Sort dropdown removed per request */}
             </div>
             
             <div className="grid grid-cols-2 gap-4 pb-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
-                {sortedProducts.length > 0 ? (
-                    sortedProducts.map((item) => (
+                {filteredProducts.length > 0 ? (
+                    filteredProducts.map((item) => (
                         <ProductCard
                             key={item.id}
                             item={item}
@@ -434,14 +509,14 @@ export default function HomePage() {
                     ))
                 ) : (
                     <p className="py-12 text-center text-gray-500 col-span-full">
-                        No products found.
+                        No products found matching your selection.
                     </p>
                 )}
             </div>
         </div>
       </div>
       
-      {/* -------------------- 5. BOTTOM NAVIGATION BAR (MOBILE) -------------------- */}
+      {/* -------------------- 6. BOTTOM NAVIGATION BAR (MOBILE) -------------------- */}
       <nav className={`fixed bottom-0 left-0 right-0 z-40 ${BASE_BG} shadow-[0_-4px_10px_rgba(0,0,0,0.05)] sm:hidden`}>
         <div className="flex justify-around py-2.5">
           
@@ -456,12 +531,12 @@ export default function HomePage() {
 
           {/* Central Action Button (Search - Now functional) */}
           <button
-            onClick={handleMobileSearchClick} // <-- New handler attached here
+            onClick={handleMobileSearchClick} // <-- Handler attached
             className="flex flex-col items-center text-gray-500 transition-colors"
             aria-label="Activate Search"
           >
              <div className={`flex items-center justify-center w-12 h-12 -mt-5 ${PRIMARY_COLOR} rounded-full shadow-xl hover:bg-gray-800 transition-colors`}>
-              <Search className="w-6 h-6 text-white" /> {/* <-- Icon changed to Search */}
+              <Search className="w-6 h-6 text-white" />
             </div>
           </button>
           

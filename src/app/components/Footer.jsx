@@ -8,9 +8,9 @@ export default function Footer() {
         <div className="space-y-6">
           {/* Brand */}
           <div>
-            <h2 className="text-xl font-semibold text-[#181a1f]">Nkozi Mart</h2>
+            <h2 className="text-xl font-semibold text-[#181a1f]">Shami Global Shop</h2>
             <p>Your campus essentials, delivered faster — and now, students can sell too!
-               Connecting buyers and sellers around Uganda Martyrs University, Nkozi.</p>
+               Connecting buyers and sellers around Uganda. Shami Global Shop</p>
 
 
           </div>
@@ -47,7 +47,7 @@ export default function Footer() {
 
           {/* Copyright */}
           <p className="mt-8 text-xs text-gray-400">
-            © {new Date().getFullYear()} Nkozi Mart. All rights reserved.
+            © {new Date().getFullYear()} Shami Global Shop. All rights reserved.
           </p>
         </div>
       </div>

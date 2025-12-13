@@ -1,7 +1,7 @@
 {
-    "name": "Nkozi Mart",
-    "short_name": "Nkozi Mart",
-    "description": "Your campus marketplace for all your needs.",
+    "name": "Shami Shop",
+    "short_name": "Shami Shop",
+    "description": "Shop the world. Delivered to Uganda.",
     "start_url": "/",
     "display": "standalone",
     "background_color": "#ffffff",
@@ -14,7 +14,7 @@
       },
       {
         "src": "/icons/icon.png",
-        "sizes": "512x512",
+        "sizes": "128x128",
         "type": "image/png"
       }
     ]
