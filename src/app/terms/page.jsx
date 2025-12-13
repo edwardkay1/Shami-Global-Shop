@@ -2,15 +2,24 @@ import React from 'react';
 import Link from 'next/link';
 import { ArrowLeft } from 'lucide-react';
 
+// --- SHAMI GLOBAL SHOP ACCENT COLOR ---
+const ACCENT_COLOR_CLASS = 'text-[#E91E63]'; 
+const ACCENT_HOVER_CLASS = 'hover:text-[#C2185B]'; // Slightly darker pink for hover
+
 export default function TermsPage() {
   return (
     <main className="min-h-screen p-8 font-sans bg-gray-50">
       <div className="max-w-4xl p-8 mx-auto bg-white shadow-lg rounded-xl">
-        {/* Back Button */}
-        <Link href="/" className="flex items-center text-gray-600 hover:text-[#2edc86] transition-colors mb-6">
+        {/* Back Button - Updated Hover Color */}
+        <Link 
+          href="/" 
+          className={`flex items-center text-gray-600 ${ACCENT_HOVER_CLASS} transition-colors mb-6`}
+        >
           <ArrowLeft className="mr-2" size={20} />
           <span>Back to Home</span>
         </Link>
+        
+        {/* Title */}
         <h1 className="mb-6 text-4xl font-extrabold text-gray-900">
           Terms & Conditions
         </h1>

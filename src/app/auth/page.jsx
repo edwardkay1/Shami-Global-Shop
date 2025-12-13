@@ -6,17 +6,22 @@ import LoginForm from '@/app/components/auth/LoginForm';
 import RegisterForm from '@/app/components/auth/RegisterForm';
 import AuthRedirector from '@/app/auth/AuthRedirector'; // This component will handle post-auth redirection
 
+// --- SHAMI GLOBAL SHOP THEME CONFIGURATION ---
+const BODY_BG = 'bg-[#f0f2f5]'; // Using the light gray background consistent with the forms
+
 function AuthPageContent() {
   const searchParams = useSearchParams();
   const mode = searchParams.get('mode');
 
   // If the mode is 'redirect', render the AuthRedirector component
   if (mode === 'redirect') {
+    // AuthRedirector should not have a background class here as it might be a full-page redirect logic
     return <AuthRedirector />;
   }
 
   return (
-    <div className="flex items-center justify-center min-h-screen p-4 bg-gray-100">
+    // Apply the consistent light background color for the overall page body
+    <div className={`flex items-center justify-center min-h-screen p-4 ${BODY_BG}`}>
       {/* If mode is 'register', show the RegisterForm (for new sellers) */}
       {/* Otherwise, default to LoginForm */}
       {mode === 'register' ? (

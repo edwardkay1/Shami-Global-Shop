@@ -1,4 +1,3 @@
-
 'use client';
 
 import { useState, useEffect } from 'react';
@@ -14,6 +13,13 @@ import ToastNotification from '../ToastNotification';
 
 const CLOUDINARY_CLOUD_NAME = 'dzflajft3';
 const CLOUDINARY_UPLOAD_PRESET = 'marketplace_products_upload';
+
+// --- SHAMI GLOBAL SHOP ACCENT COLORS ---
+const ACCENT_COLOR = '#E91E63'; // Hot Pink/Magenta
+const ACCENT_DARK_HOVER = '#C2185B'; // Darker Pink for button hover
+const ACCENT_LIGHT_BG = 'bg-pink-50'; // Light pink background for drag-over
+const ACCENT_RING_COLOR = 'focus:ring-[#E91E63]';
+const ACCENT_DRAG_BORDER = 'border-[#E91E63]'; 
 
 export default function ProfileForm({ initialData, onSave }) {
   const [storeName, setStoreName] = useState(initialData?.storeName || '');
@@ -217,7 +223,8 @@ export default function ProfileForm({ initialData, onSave }) {
               Banner Image
             </label>
             <div
-              className={`relative w-full h-32 border-2 border-dashed rounded-xl overflow-hidden cursor-pointer transition-colors ${isBannerDragging ? 'border-indigo-500 bg-indigo-50' : 'border-gray-300 bg-gray-50'}`}
+              // Updated drag-over colors
+              className={`relative w-full h-32 border-2 border-dashed rounded-xl overflow-hidden cursor-pointer transition-colors ${isBannerDragging ? `${ACCENT_DRAG_BORDER} ${ACCENT_LIGHT_BG}` : 'border-gray-300 bg-gray-50'}`}
               onDragOver={handleDragOver}
               onDragEnter={handleDragEnterBanner}
               onDragLeave={handleDragLeaveBanner}
@@ -252,7 +259,8 @@ export default function ProfileForm({ initialData, onSave }) {
               Profile Picture
             </label>
             <div
-              className={`relative w-28 h-28 mx-auto rounded-full border-2 border-dashed overflow-hidden cursor-pointer transition-colors ${isProfileDragging ? 'border-indigo-500 bg-indigo-50' : 'border-gray-300 bg-gray-50'}`}
+              // Updated drag-over colors
+              className={`relative w-28 h-28 mx-auto rounded-full border-2 border-dashed overflow-hidden cursor-pointer transition-colors ${isProfileDragging ? `${ACCENT_DRAG_BORDER} ${ACCENT_LIGHT_BG}` : 'border-gray-300 bg-gray-50'}`}
               onDragOver={handleDragOver}
               onDragEnter={handleDragEnterProfile}
               onDragLeave={handleDragLeaveProfile}
@@ -291,7 +299,8 @@ export default function ProfileForm({ initialData, onSave }) {
             name="storeName"
             value={storeName}
             onChange={(e) => setStoreName(e.target.value)}
-            className="w-full px-4 py-3 mt-1 border border-gray-300 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-[#2edc86] focus:border-transparent transition-all"
+            // Updated focus ring color
+            className={`w-full px-4 py-3 mt-1 border border-gray-300 rounded-xl shadow-sm focus:outline-none focus:ring-2 ${ACCENT_RING_COLOR} focus:border-transparent transition-all`}
             required
           />
         </div>
@@ -303,7 +312,8 @@ export default function ProfileForm({ initialData, onSave }) {
             rows="3"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
-            className="w-full px-4 py-3 mt-1 border border-gray-300 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-[#2edc86] focus:border-transparent transition-all"
+            // Updated focus ring color
+            className={`w-full px-4 py-3 mt-1 border border-gray-300 rounded-xl shadow-sm focus:outline-none focus:ring-2 ${ACCENT_RING_COLOR} focus:border-transparent transition-all`}
             required
           />
         </div>
@@ -315,7 +325,8 @@ export default function ProfileForm({ initialData, onSave }) {
             name="whatsapp"
             value={whatsapp}
             onChange={(e) => setWhatsapp(e.target.value)}
-            className="w-full px-4 py-3 mt-1 border border-gray-300 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-[#2edc86] focus:border-transparent transition-all"
+            // Updated focus ring color
+            className={`w-full px-4 py-3 mt-1 border border-gray-300 rounded-xl shadow-sm focus:outline-none focus:ring-2 ${ACCENT_RING_COLOR} focus:border-transparent transition-all`}
             required
           />
           {whatsappError && <p className="mt-1 text-sm text-red-500">{whatsappError}</p>}
@@ -331,7 +342,8 @@ export default function ProfileForm({ initialData, onSave }) {
             name="location"
             value={location}
             onChange={(e) => setLocation(e.target.value)}
-            className="w-full px-4 py-3 mt-1 border border-gray-300 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-[#2edc86] focus:border-transparent transition-all"
+            // Updated focus ring color
+            className={`w-full px-4 py-3 mt-1 border border-gray-300 rounded-xl shadow-sm focus:outline-none focus:ring-2 ${ACCENT_RING_COLOR} focus:border-transparent transition-all`}
             required
           />
         </div>
@@ -339,7 +351,9 @@ export default function ProfileForm({ initialData, onSave }) {
         <div className="flex justify-end pt-4">
           <button
             type="submit"
-            className="px-6 py-3 font-semibold text-white transition-colors bg-[#2edc86] rounded-full shadow-md hover:bg-[#25b36b] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#2edc86] disabled:opacity-50"
+            // Updated Button Styles (BG, Hover, and Focus Ring)
+            style={{ backgroundColor: ACCENT_COLOR }} // Use style for explicit BG color for strong adherence
+            className={`px-6 py-3 font-semibold text-white transition-colors rounded-full shadow-md hover:bg-[${ACCENT_DARK_HOVER}] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#E91E63] disabled:opacity-50`}
             disabled={loading}
           >
             {loading ? <LoadingSpinner /> : 'Save Changes'}

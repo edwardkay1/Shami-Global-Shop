@@ -1,4 +1,3 @@
-
 'use client';
 
 import { useState, useEffect } from 'react';
@@ -20,6 +19,11 @@ const countryCodes = [
     { code: "+254", name: "Kenya" },
     // Add more country codes as needed
 ];
+
+// --- SHAMI GLOBAL SHOP COLOR CONFIG ---
+const PRIMARY_COLOR = '#E91E63'; // Hot Pink/Magenta
+const PRIMARY_COLOR_HOVER = '#C2185B'; // Darker Pink for hover
+const PRIMARY_COLOR_RING = '#FF4081'; // Lighter Pink for focus ring
 
 export default function RegisterForm() {
     const [email, setEmail] = useState('');
@@ -141,14 +145,14 @@ export default function RegisterForm() {
     return (
         <div className="min-h-screen flex items-center justify-center p-4 bg-[#f0f2f5]">
             <div className="flex flex-col w-full max-w-4xl overflow-hidden bg-white shadow-2xl md:flex-row rounded-3xl">
-                {/* Left Section - Aesthetic Background */}
-                <div className="relative flex flex-col items-center justify-between p-8 text-center text-white md:w-1/2 bg-gradient-to-br from-teal-400 to-green-600">
+                {/* Left Section - Aesthetic Background (Hot Pink Gradient) */}
+                <div className="relative flex flex-col items-center justify-between p-8 text-center text-white md:w-1/2 bg-gradient-to-br from-[#FF4081] to-[#E91E63]">
                     <div className="absolute inset-0 opacity-20">
                         <svg className="w-full h-full" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-                            <circle cx="10%" cy="10%" r="15" fill="currentColor" className="text-emerald-300" />
-                            <circle cx="90%" cy="20%" r="20" fill="currentColor" className="text-orange-300" />
-                            <circle cx="20%" cy="80%" r="18" fill="currentColor" className="text-blue-300" />
-                            <circle cx="70%" cy="90%" r="25" fill="currentColor" className="text-purple-300" />
+                            <circle cx="10%" cy="10%" r="15" fill="currentColor" className="text-pink-300" />
+                            <circle cx="90%" cy="20%" r="20" fill="currentColor" className="text-red-300" />
+                            <circle cx="20%" cy="80%" r="18" fill="currentColor" className="text-purple-300" />
+                            <circle cx="70%" cy="90%" r="25" fill="currentColor" className="text-fuchsia-300" />
                             <rect x="30%" y="40%" width="40" height="40" rx="10" fill="currentColor" className="text-yellow-300" />
                         </svg>
                     </div>
@@ -177,7 +181,7 @@ export default function RegisterForm() {
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
                                 required
-                                className="w-full px-4 py-3 border border-gray-300 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-[#2edc86] focus:border-transparent transition-all"
+                                className={`w-full px-4 py-3 border border-gray-300 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-[${PRIMARY_COLOR_RING}] focus:border-transparent transition-all`}
                                 placeholder="Enter your email"
                             />
                         </div>
@@ -190,7 +194,7 @@ export default function RegisterForm() {
                                     value={password}
                                     onChange={handlePasswordChange}
                                     required
-                                    className="w-full px-4 py-3 border border-gray-300 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-[#2edc86] focus:border-transparent transition-all pr-10"
+                                    className={`w-full px-4 py-3 border border-gray-300 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-[${PRIMARY_COLOR_RING}] focus:border-transparent transition-all pr-10`}
                                     placeholder="Set your password"
                                 />
                                 <button
@@ -218,7 +222,7 @@ export default function RegisterForm() {
                                 value={storeName}
                                 onChange={(e) => setStoreName(e.target.value)}
                                 required
-                                className="w-full px-4 py-3 border border-gray-300 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-[#2edc86] focus:border-transparent transition-all"
+                                className={`w-full px-4 py-3 border border-gray-300 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-[${PRIMARY_COLOR_RING}] focus:border-transparent transition-all`}
                                 placeholder="e.g., My Awesome Shop"
                             />
                         </div>
@@ -229,7 +233,7 @@ export default function RegisterForm() {
                                     id="countryCode"
                                     value={contactCode}
                                     onChange={(e) => setContactCode(e.target.value)}
-                                    className="px-4 py-3 border border-gray-300 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-[#2edc86] focus:border-transparent transition-all"
+                                    className={`px-4 py-3 border border-gray-300 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-[${PRIMARY_COLOR_RING}] focus:border-transparent transition-all`}
                                 >
                                     {countryCodes.map((country, index) => (
                                         <option key={index} value={country.code}>
@@ -243,7 +247,7 @@ export default function RegisterForm() {
                                     value={contactNumber}
                                     onChange={(e) => setContactNumber(e.target.value)}
                                     required
-                                    className="w-full px-4 py-3 border border-gray-300 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-[#2edc86] focus:border-transparent transition-all"
+                                    className={`w-full px-4 py-3 border border-gray-300 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-[${PRIMARY_COLOR_RING}] focus:border-transparent transition-all`}
                                     placeholder="e.g., 7XXXXXXXX"
                                 />
                             </div>
@@ -256,7 +260,7 @@ export default function RegisterForm() {
                         <button
                             type="submit"
                             disabled={loading || passwordErrors.length > 0}
-                            className="w-full flex justify-center items-center py-3 px-4 border border-transparent rounded-xl shadow-sm text-lg font-semibold text-white bg-[#2edc86] hover:bg-[#25b36b] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#2edc86] disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                            className={`w-full flex justify-center items-center py-3 px-4 border border-transparent rounded-xl shadow-sm text-lg font-semibold text-white bg-[${PRIMARY_COLOR}] hover:bg-[${PRIMARY_COLOR_HOVER}] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[${PRIMARY_COLOR_RING}] disabled:opacity-50 disabled:cursor-not-allowed transition-colors`}
                         >
                             {loading ? 'Registering...' : 'Register Shop →'}
                         </button>

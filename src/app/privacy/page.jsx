@@ -3,12 +3,19 @@ import React from 'react';
 import Link from 'next/link';
 import { ArrowLeft } from 'lucide-react';
 
+// --- SHAMI GLOBAL SHOP ACCENT COLORS ---
+const ACCENT_HOVER_CLASS = 'hover:text-[#E91E63]'; // Hot Pink/Magenta for hover
+const BASE_LAYOUT_BG = 'bg-gray-50'; // Aligned with other layouts
+
 export default function PrivacyPage() {
   return (
-    <main className="min-h-screen p-8 font-sans bg-[#f0f2f5]">
+    <main className={`min-h-screen p-8 font-sans ${BASE_LAYOUT_BG}`}>
       <div className="max-w-4xl p-6 mx-auto bg-white shadow-md rounded-xl">
-        {/* Back Button */}
-        <Link href="/" className="flex items-center text-gray-600 hover:text-[#2edc86] transition-colors mb-6">
+        {/* Back Button - Updated Hover Color */}
+        <Link 
+          href="/" 
+          className={`flex items-center text-gray-600 ${ACCENT_HOVER_CLASS} transition-colors mb-6`}
+        >
           <ArrowLeft className="mr-2" size={20} />
           <span>Back to Home</span>
         </Link>

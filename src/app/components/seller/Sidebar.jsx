@@ -14,8 +14,13 @@ import {
   LucidePackagePlus,
   LucideUser,
   LucideLogOut,
-  LucideArrowLeft, // Import the back arrow icon
+  LucideArrowLeft, 
 } from 'lucide-react';
+
+// --- SHAMI GLOBAL SHOP ACCENT COLORS ---
+const ACCENT_COLOR_TEXT = 'text-[#E91E63]'; // Hot Pink/Magenta text
+const ACCENT_COLOR_BG = 'bg-pink-50'; // Light pink background for active state
+const ACCENT_HOVER_CLASS = 'hover:text-[#E91E63]'; // Hot Pink/Magenta for general hover
 
 export default function Sidebar() {
   const pathname = usePathname();
@@ -63,7 +68,8 @@ export default function Sidebar() {
       {/* Desktop Sidebar (one side) */}
       <div className="fixed top-0 left-0 flex-col hidden w-64 h-full bg-white shadow-md md:flex" style={{ borderRight: '1px solid #e0e0e0' }}>
         <Link href="/" className="flex items-center justify-center h-20">
-          <img src="/logo.png" alt="Ugbuy Logo" className="w-auto h-12" />
+          {/* Assuming /logo.png is the image, but maybe we should display the text logo in pink? */}
+          <img src="/logo.png" alt="Shami Global Shop Logo" className="w-auto h-12" />
         </Link>
         
         {/* Main Nav Section */}
@@ -74,12 +80,13 @@ export default function Sidebar() {
                 <div
                   className={cn(
                     'flex items-center rounded-md px-4 py-3 transition-colors',
+                    // Updated Active State Colors
                     pathname === item.href
-                      ? 'bg-[#e6fcf0] text-[#25d366] font-semibold'
+                      ? `${ACCENT_COLOR_BG} ${ACCENT_COLOR_TEXT} font-semibold`
                       : 'text-gray-700 hover:bg-gray-50'
                   )}
                 >
-                  <span className="mr-3 text-lg">{item.icon}</span>
+                  <span className={`mr-3 text-lg ${pathname === item.href ? ACCENT_COLOR_TEXT : 'text-gray-500'}`}>{item.icon}</span>
                   <span className="text-sm font-medium">{item.name}</span>
                 </div>
               </Link>
@@ -91,6 +98,7 @@ export default function Sidebar() {
         <div className="p-4 border-t border-gray-200">
           <button
             onClick={handleLogout}
+            // Updated Logout Hover Class
             className="flex items-center justify-center w-full px-4 py-2 text-sm font-medium text-gray-600 transition-colors rounded-md hover:bg-red-100 hover:text-red-600 focus:outline-none focus:ring-2 focus:ring-red-600"
             title="Logout"
           >
@@ -106,13 +114,14 @@ export default function Sidebar() {
           {/* Back button for mobile */}
           <button
             onClick={() => router.back()}
-            className="p-2 text-gray-500 transition-colors rounded-full hover:bg-gray-100"
+            // Updated Back Button Hover Class
+            className={`p-2 text-gray-500 transition-colors rounded-full ${ACCENT_HOVER_CLASS} hover:bg-gray-100`}
             title="Go Back"
           >
             <LucideArrowLeft className="w-6 h-6" />
           </button>
           <Link href="/" className="flex items-center justify-center h-full">
-            <img src="/logo.png" alt="Ugbuy Logo" className="w-auto h-10" />
+            <img src="/logo.png" alt="Shami Global Shop Logo" className="w-auto h-10" />
           </Link>
           <div className="flex items-center gap-2">
             <button
@@ -134,7 +143,8 @@ export default function Sidebar() {
               <div
                 className={cn(
                   'flex flex-col items-center justify-center p-2 transition-colors',
-                  pathname === item.href ? 'text-[#25d366]' : 'text-gray-500 hover:text-[#25d366]'
+                  // Updated Mobile Nav Active State
+                  pathname === item.href ? ACCENT_COLOR_TEXT : `text-gray-500 ${ACCENT_HOVER_CLASS}`
                 )}
               >
                 <span className="text-xl">{item.icon}</span>

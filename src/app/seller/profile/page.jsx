@@ -1,5 +1,3 @@
-
-
 'use client';
 
 import { useState, useEffect } from 'react';
@@ -23,6 +21,14 @@ if (!getApps().length) {
 }
 const auth = getAuth(app);
 const db = getFirestore(app);
+
+// --- SHAMI GLOBAL SHOP ACCENT COLORS ---
+const ACCENT_COLOR_CLASS = 'bg-[#E91E63]'; // Hot Pink/Magenta
+const ACCENT_HOVER_CLASS = 'hover:bg-[#C2185B]'; // Darker Pink for hover
+const ACCENT_RING_COLOR = 'focus:ring-[#E91E63]';
+const ACCENT_TEXT_COLOR = 'text-[#E91E63]';
+const ACCENT_TEXT_HOVER = 'hover:text-[#C2185B]';
+const FALLBACK_BG = 'bg-gray-50'; // Using the slightly lighter background
 
 // A simple loading spinner component
 const LoadingSpinner = () => (
@@ -243,7 +249,8 @@ const ProfileForm = ({ initialData, onSave, onClose }) => {
             name="storeName"
             value={storeName}
             onChange={(e) => setStoreName(e.target.value)}
-            className="w-full px-4 py-3 mt-1 border border-gray-300 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-[#2edc86] focus:border-transparent transition-all"
+            // Updated focus ring
+            className={`w-full px-4 py-3 mt-1 border border-gray-300 rounded-xl shadow-sm focus:outline-none focus:ring-2 ${ACCENT_RING_COLOR} focus:border-transparent transition-all`}
             required
           />
         </div>
@@ -255,7 +262,8 @@ const ProfileForm = ({ initialData, onSave, onClose }) => {
             rows="3"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
-            className="w-full px-4 py-3 mt-1 border border-gray-300 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-[#2edc86] focus:border-transparent transition-all"
+            // Updated focus ring
+            className={`w-full px-4 py-3 mt-1 border border-gray-300 rounded-xl shadow-sm focus:outline-none focus:ring-2 ${ACCENT_RING_COLOR} focus:border-transparent transition-all`}
             required
           />
         </div>
@@ -267,7 +275,8 @@ const ProfileForm = ({ initialData, onSave, onClose }) => {
             name="whatsapp"
             value={whatsapp}
             onChange={(e) => setWhatsapp(e.target.value)}
-            className="w-full px-4 py-3 mt-1 border border-gray-300 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-[#2edc86] focus:border-transparent transition-all"
+            // Updated focus ring
+            className={`w-full px-4 py-3 mt-1 border border-gray-300 rounded-xl shadow-sm focus:outline-none focus:ring-2 ${ACCENT_RING_COLOR} focus:border-transparent transition-all`}
             required
           />
         </div>
@@ -279,7 +288,8 @@ const ProfileForm = ({ initialData, onSave, onClose }) => {
             name="location"
             value={location}
             onChange={(e) => setLocation(e.target.value)}
-            className="w-full px-4 py-3 mt-1 border border-gray-300 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-[#2edc86] focus:border-transparent transition-all"
+            // Updated focus ring
+            className={`w-full px-4 py-3 mt-1 border border-gray-300 rounded-xl shadow-sm focus:outline-none focus:ring-2 ${ACCENT_RING_COLOR} focus:border-transparent transition-all`}
             required
           />
         </div>
@@ -287,7 +297,8 @@ const ProfileForm = ({ initialData, onSave, onClose }) => {
         <div className="flex justify-end pt-4">
           <button
             type="submit"
-            className="px-6 py-3 font-semibold text-white transition-colors bg-[#2edc86] rounded-full shadow-md hover:bg-[#25b36b] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#2edc86] disabled:opacity-50"
+            // Updated button class to Hot Pink/Magenta
+            className={`px-6 py-3 font-semibold text-white transition-colors ${ACCENT_COLOR_CLASS} rounded-full shadow-md ${ACCENT_HOVER_CLASS} focus:outline-none focus:ring-2 focus:ring-offset-2 ${ACCENT_RING_COLOR} disabled:opacity-50`}
             disabled={loading}
           >
             {loading ? <LoadingSpinner /> : 'Save Changes'}
@@ -323,7 +334,8 @@ const ProductCard = ({ product }) => {
           </div>
         )}
         <div className="flex items-center justify-between mt-3">
-          <p className="text-lg font-bold text-[#2edc86]">${product.price}</p>
+          {/* Updated text color for price */}
+          <p className={`text-lg font-bold ${ACCENT_TEXT_COLOR}`}>${product.price}</p>
         </div>
       </div>
     </div>
@@ -463,7 +475,7 @@ export default function SellerProfilePage() {
 
   if (error) {
     return (
-      <div className="flex flex-col items-center justify-center h-screen bg-gray-100">
+      <div className={`flex flex-col items-center justify-center h-screen ${FALLBACK_BG}`}>
         <p className="px-4 font-medium text-center text-red-500">{error}</p>
       </div>
     );
@@ -481,7 +493,7 @@ export default function SellerProfilePage() {
   const currentProfile = profile || defaultProfile;
 
   return (
-    <div className="min-h-screen text-gray-800 bg-gray-100">
+    <div className={`min-h-screen text-gray-800 ${FALLBACK_BG}`}>
       <div className="relative pb-24 bg-white shadow-md rounded-b-3xl">
         <div className="relative w-full h-40 overflow-hidden bg-gray-300">
           <img
@@ -502,7 +514,8 @@ export default function SellerProfilePage() {
           <div className="flex flex-col mt-4 space-y-2 sm:flex-row sm:space-y-0 sm:space-x-2 sm:mt-0">
                 <button
                     onClick={() => setIsProfileEditModalOpen(true)}
-                    className="flex-1 sm:flex-none flex items-center justify-center px-3 py-1.5 text-sm font-semibold text-white bg-[#2edc86] rounded-full shadow-md hover:bg-[#25b36b] transition-colors transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-[#2edc86] focus:ring-opacity-50"
+                    // Updated button class to Hot Pink/Magenta
+                    className={`flex-1 sm:flex-none flex items-center justify-center px-3 py-1.5 text-sm font-semibold text-white ${ACCENT_COLOR_CLASS} rounded-full shadow-md ${ACCENT_HOVER_CLASS} transition-colors transform hover:scale-105 focus:outline-none focus:ring-2 ${ACCENT_RING_COLOR} focus:ring-opacity-50`}
                 >
                     <Pencil className="w-4 h-4 mr-2" />
                     Edit Profile
@@ -536,7 +549,8 @@ export default function SellerProfilePage() {
                 href={`https://wa.me/${currentProfile.whatsapp}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center text-[#2edc86] hover:text-[#25b36b] transition-colors"
+                // Updated text color and hover color
+                className={`flex items-center ${ACCENT_TEXT_COLOR} ${ACCENT_TEXT_HOVER} transition-colors`}
               >
                 <Phone className="w-4 h-4 mr-1" />
                 {currentProfile.whatsapp}

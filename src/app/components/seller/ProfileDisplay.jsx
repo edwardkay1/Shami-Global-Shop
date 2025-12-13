@@ -3,6 +3,11 @@
 import Image from 'next/image';
 import { FaWhatsapp } from 'react-icons/fa'; // Import WhatsApp icon
 
+// --- SHAMI GLOBAL SHOP ACCENT COLORS ---
+const ACCENT_COLOR_CLASS = 'text-[#E91E63]'; // Hot Pink/Magenta for text/icon
+const ACCENT_HOVER_CLASS = 'hover:text-[#C2185B]'; // Darker Pink for hover
+const ACCENT_BORDER_CLASS = 'border-[#E91E63]'; // Hot Pink/Magenta for border
+
 /**
  * Displays the seller's profile details.
  * @param {object} profile - The seller's profile object.
@@ -37,7 +42,8 @@ export default function ProfileDisplay({ profile, productCount = 0 }) {
                     alt={`${profile.storeName} Avatar`}
                     width={64} // Slightly larger for profile display
                     height={64}
-                    className="rounded-full border-2 border-[#2edc86] shadow-sm" // Green border and subtle shadow
+                    // Updated border color
+                    className={`rounded-full border-2 ${ACCENT_BORDER_CLASS} shadow-sm`} 
                 />
                 <div>
                     <p className="text-xl font-semibold text-gray-900">{profile.storeName}</p>
@@ -62,7 +68,8 @@ export default function ProfileDisplay({ profile, productCount = 0 }) {
                             href={whatsappUrl} 
                             target="_blank" 
                             rel="noopener noreferrer" 
-                            className="ml-2 text-green-500 transition-colors hover:text-green-600"
+                            // Updated WhatsApp icon color and hover state
+                            className={`ml-2 ${ACCENT_COLOR_CLASS} transition-colors ${ACCENT_HOVER_CLASS}`}
                             aria-label="Chat on WhatsApp"
                         >
                             <FaWhatsapp className="inline-block text-xl" />

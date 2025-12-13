@@ -8,6 +8,9 @@ import { signOut } from "firebase/auth"; // Import signOut from Firebase auth
 import { auth } from '@/app/firebase/config';
 import ToastNotification from "@/app/components/ToastNotification"; // Assuming this path is correct
 
+// --- SHAMI GLOBAL SHOP DASHBOARD CONFIG ---
+const BASE_DASHBOARD_BG = 'bg-gray-50'; 
+
 export default function LogoutPage() {
   const router = useRouter();
   const [toast, setToast] = useState({ message: '', type: 'info', isVisible: false });
@@ -40,7 +43,8 @@ export default function LogoutPage() {
   }, [router]);
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center p-6 bg-[#f0f2f5] font-sans">
+    // Updated background
+    <div className={`min-h-screen flex flex-col items-center justify-center p-6 ${BASE_DASHBOARD_BG} font-sans`}>
       <div className="p-8 text-center bg-white shadow-lg rounded-3xl">
         <h1 className="mb-4 text-3xl font-bold text-gray-800">Logging Out...</h1>
         <p className="text-lg text-gray-600">Please wait while we securely sign you out.</p>

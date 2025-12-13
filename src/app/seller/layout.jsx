@@ -1,6 +1,9 @@
 import React from 'react';
 import Sidebar from '../components/seller/Sidebar';
 
+// --- SHAMI GLOBAL SHOP DASHBOARD CONFIG ---
+const BASE_DASHBOARD_BG = 'bg-gray-50'; // Using the slightly lighter background for the layout
+
 export const metadata = {
   title: 'Seller Dashboard',
   description: 'Manage your store, products, and profile.',
@@ -8,7 +11,8 @@ export const metadata = {
 
 export default function SellerLayout({ children }) {
   return (
-    <div className="flex min-h-screen bg-[#f0f2f5]">
+    // Updated background to BASE_DASHBOARD_BG (Silver/White)
+    <div className={`flex min-h-screen ${BASE_DASHBOARD_BG}`}>
       {/* Sidebar is hidden on mobile and shown on desktop */}
       <Sidebar />
 

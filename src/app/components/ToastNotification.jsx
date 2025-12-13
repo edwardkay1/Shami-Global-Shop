@@ -4,6 +4,9 @@
 import { useEffect } from "react";
 import { CheckCircle, XCircle, Info, X } from "lucide-react";
 
+// --- SHAMI GLOBAL SHOP ACCENT COLORS ---
+const ACCENT_HOVER_CLASS = 'hover:text-[#E91E63]'; // Hot Pink/Magenta for hover
+
 const icons = {
   success: <CheckCircle className="w-5 h-5 text-green-500" />,
   error: <XCircle className="w-5 h-5 text-red-500" />,
@@ -38,7 +41,8 @@ export default function ToastNotification({ message, type, isVisible, onDismiss 
       <div className="flex items-center space-x-3">
         {icons[type]}
         <div className="flex-1 text-sm font-semibold">{message}</div>
-        <button onClick={onDismiss} className="text-gray-500 hover:text-gray-700">
+        {/* Updated button hover class */}
+        <button onClick={onDismiss} className={`text-gray-500 ${ACCENT_HOVER_CLASS}`}>
           <X className="w-4 h-4" />
         </button>
       </div>

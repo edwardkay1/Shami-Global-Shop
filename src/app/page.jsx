@@ -9,12 +9,12 @@ import { useCart } from "./providers/CartProvider";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { db } from "./firebase/config.js";
 
-// --- TEMPORARY UI/UX CONFIGURATION ---
-const ACCENT_COLOR = 'bg-[#ffc600]'; 
-const ACCENT_TEXT_COLOR = 'text-black';
-const PRIMARY_COLOR = 'bg-black'; 
+// --- SHAMI GLOBAL SHOP UI/UX CONFIGURATION (Hot Pink/Silver) ---
+const ACCENT_COLOR = 'bg-[#E91E63]'; // Hot Pink/Magenta
+const ACCENT_TEXT_COLOR = 'text-white'; // White/Silver for contrast
+const PRIMARY_COLOR = 'bg-[#333333]'; // Dark Gray for secondary buttons/text
 const BASE_BG = 'bg-white';
-const BODY_BG = 'bg-gray-100'; 
+const BODY_BG = 'bg-gray-50'; // Slightly lighter background
 
 // Updated list of categories with 'All' first
 const categories = [
@@ -33,21 +33,22 @@ const categories = [
 const dynamicBanners = [
   { 
     id: 1, 
-    title: "🎄 Christmas Mega Sale! 🎁", 
-    discount: "Up to 60% OFF", 
-    buttonText: "Shop Holiday Deals", 
-    img: "/assets/images/xmas2.jpeg", 
-    bgColor: "from-red-600 to-red-500", 
+    title: "Pink Friday Xmas Drop 💖🎄", 
+    discount: "Up to 60% OFF Global Finds", 
+    buttonText: "Shop the Vibe", 
+    img: "/xbaby.png", 
+    bgColor: "from-[#E91E63] to-[#FF4081]", // Main Pink Gradient
   },
   { 
     id: 2, 
-    title: "New Year, New Gear! ✨", 
-    discount: "Electronics Drop", 
-    buttonText: "See Gadgets", 
-    img: "/assets/images/xmas2.jpeg", 
-    bgColor: "from-blue-700 to-blue-500", 
+    title: "New Year Glow-Up ✨", 
+    discount: "Beauty • Fashion • Tech", 
+    buttonText: "Start Fresh", 
+    img: "/xtree.png", 
+    bgColor: "from-purple-700 to-indigo-500",
   },
 ];
+
 
 // Helper functions (kept for functionality)
 const shuffleArray = (array) => {
@@ -110,7 +111,8 @@ const ProductCard = ({ item, addToCart }) => {
                 </p>
                 <button
                     onClick={() => addToCart(item)}
-                    className={`p-1.5 text-white transition-colors ${PRIMARY_COLOR} rounded-lg shadow-sm hover:bg-gray-800`}
+                    // PRIMARY_COLOR used here
+                    className={`p-1.5 text-white transition-colors ${PRIMARY_COLOR} rounded-lg shadow-sm hover:bg-gray-600`}
                     title="Add to Cart"
                 >
                     <Plus className="w-4 h-4" />
@@ -140,7 +142,10 @@ const LatestProductCard = ({ item, addToCart }) => {
                     sizes="40vw"
                     priority
                 />
-                <span className={`absolute top-2 left-2 px-2 py-0.5 text-xs font-bold text-black ${ACCENT_COLOR} rounded-full shadow-md`}>
+                <span 
+                    // ACCENT_COLOR and ACCENT_TEXT_COLOR used here
+                    className={`absolute top-2 left-2 px-2 py-0.5 text-xs font-bold ${ACCENT_TEXT_COLOR} ${ACCENT_COLOR} rounded-full shadow-md`}
+                >
                     NEW
                 </span>
             </div>
@@ -158,7 +163,8 @@ const LatestProductCard = ({ item, addToCart }) => {
                 </p>
                 <button
                     onClick={() => addToCart(item)}
-                    className={`p-1.5 text-white transition-colors ${PRIMARY_COLOR} rounded-lg shadow-sm hover:bg-gray-800`}
+                    // PRIMARY_COLOR used here
+                    className={`p-1.5 text-white transition-colors ${PRIMARY_COLOR} rounded-lg shadow-sm hover:bg-gray-600`}
                     title="Add to Cart"
                 >
                     <Plus className="w-4 h-4" />
@@ -364,7 +370,7 @@ export default function HomePage() {
         {menuOpen && (
           <div className={`absolute left-0 right-0 flex flex-col items-start p-4 space-y-2 ${BASE_BG} border-t border-gray-100 shadow-lg top-16 md:hidden`}>
             <Link href="/about" className="w-full px-3 py-2 text-lg text-gray-800 transition-colors duration-200 rounded-md hover:text-black hover:bg-gray-50">About</Link>
-            <Link href="/auth?mode=register" className={`w-full px-3 py-2 text-lg font-semibold text-white transition-colors duration-200 ${PRIMARY_COLOR} rounded-md shadow-md text-center`}>Become a Seller</Link>
+            <Link href="/auth?mode=register" className={`w-full px-3 py-2 text-lg font-semibold text-white transition-colors duration-200 ${ACCENT_COLOR} rounded-md shadow-md text-center hover:bg-[#C2185B]`}>Become a Seller</Link>
             <Link href="/auth?mode=login" className="w-full px-3 py-2 text-lg font-semibold text-gray-800 transition-colors duration-200 rounded-md hover:text-black hover:bg-gray-50">Sign In</Link>
           </div>
         )}
@@ -388,11 +394,11 @@ export default function HomePage() {
                     <h1 className="text-xl font-bold text-white md:text-3xl">
                         {banner.title}
                     </h1>
-                    <p className={`text-3xl font-extrabold ${ACCENT_TEXT_COLOR} mt-1 mb-3 bg-white px-2 py-0.5 rounded-lg inline-block shadow-sm md:text-4xl`}>
+                    <p className={`text-3xl font-extrabold ${ACCENT_COLOR === 'bg-[#E91E63]' ? 'text-gray-900' : ACCENT_TEXT_COLOR} mt-1 mb-3 bg-white px-2 py-0.5 rounded-lg inline-block shadow-sm md:text-4xl`}>
                         {banner.discount}
                     </p>
                     <button 
-                        className={`px-6 py-2 text-sm font-semibold ${ACCENT_TEXT_COLOR} transition-colors ${BASE_BG} rounded-full shadow-lg hover:bg-gray-200`}
+                        className={`px-6 py-2 text-sm font-semibold ${ACCENT_COLOR === 'bg-[#E91E63]' ? 'text-gray-800' : ACCENT_TEXT_COLOR} transition-colors ${BASE_BG} rounded-full shadow-lg hover:bg-gray-200`}
                     >
                         {banner.buttonText}
                     </button>
@@ -455,8 +461,9 @@ export default function HomePage() {
                         data-category={cat}
                         onClick={() => setSelectedCategory(cat)}
                         className={`flex-shrink-0 px-5 py-2 text-sm font-medium rounded-full transition-all duration-200 shadow-sm border whitespace-nowrap ${
+                            // ACCENT_COLOR and ACCENT_TEXT_COLOR used here
                             selectedCategory === cat
-                                ? `${ACCENT_COLOR} ${ACCENT_TEXT_COLOR} border-transparent shadow-md` 
+                                ? `${ACCENT_COLOR} ${ACCENT_TEXT_COLOR} border-transparent shadow-md hover:bg-[#C2185B]` 
                                 : `bg-white text-gray-700 border-gray-300 hover:bg-gray-50`
                         } flex items-center space-x-2`}
                     >
@@ -535,7 +542,8 @@ export default function HomePage() {
             className="flex flex-col items-center text-gray-500 transition-colors"
             aria-label="Activate Search"
           >
-             <div className={`flex items-center justify-center w-12 h-12 -mt-5 ${PRIMARY_COLOR} rounded-full shadow-xl hover:bg-gray-800 transition-colors`}>
+             {/* PRIMARY_COLOR used here for contrast */}
+             <div className={`flex items-center justify-center w-12 h-12 -mt-5 ${ACCENT_COLOR} rounded-full shadow-xl hover:bg-[#C2185B] transition-colors`}>
               <Search className="w-6 h-6 text-white" />
             </div>
           </button>

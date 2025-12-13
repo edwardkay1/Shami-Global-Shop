@@ -13,6 +13,12 @@ import ProductList from '../../components/seller/ProductList';
 import Modal from '../../components/Modal';
 import ToastNotification from '../../components/ToastNotification';
 
+// --- SHAMI GLOBAL SHOP ACCENT COLORS ---
+const ACCENT_COLOR_CLASS = 'bg-[#E91E63]'; // Hot Pink/Magenta
+const ACCENT_HOVER_CLASS = 'hover:bg-[#C2185B]'; // Darker Pink for hover
+const ACCENT_RING_COLOR = 'focus:ring-[#E91E63]';
+const BASE_DASHBOARD_BG = 'bg-gray-50'; // Aligned with SellerLayout
+
 export default function ManageProductsPage() {
   const [user, setUser] = useState(null);
   const [profile, setProfile] = useState(null);
@@ -112,14 +118,14 @@ export default function ManageProductsPage() {
 
   if (loading || !user) {
     return (
-      <div className="flex items-center justify-center min-h-screen text-lg text-gray-600 bg-[#f0f2f5]">
+      <div className={`flex items-center justify-center min-h-screen text-lg text-gray-600 ${BASE_DASHBOARD_BG}`}>
         Loading...
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-[#f0f2f5] p-6 font-sans antialiased">
+    <div className={`min-h-screen ${BASE_DASHBOARD_BG} p-6 font-sans antialiased`}>
       <header className="flex items-center justify-between mb-8">
         <h1 className="text-2xl font-bold text-gray-800">Manage Products</h1>
         <button
@@ -127,7 +133,8 @@ export default function ManageProductsPage() {
             setEditingProduct(null);
             setIsModalOpen(true);
           }}
-          className="flex items-center px-6 py-3 text-white bg-[#2edc86] rounded-full shadow-lg hover:bg-[#25b36b] transition-colors duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-[#2edc86] focus:ring-opacity-50"
+          // Updated button styling to Hot Pink/Magenta
+          className={`flex items-center px-6 py-3 text-white ${ACCENT_COLOR_CLASS} rounded-full shadow-lg ${ACCENT_HOVER_CLASS} transition-colors duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 ${ACCENT_RING_COLOR} focus:ring-opacity-50`}
         >
           <Plus className="w-5 h-5 mr-2" />
           <span className="text-lg font-semibold">Add New Product</span>
@@ -142,10 +149,12 @@ export default function ManageProductsPage() {
       />
 
       <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
+        {/* ProductForm will need to be updated next to carry the theme inside the modal */}
         <ProductForm onSubmit={handleFormSubmitted} />
       </Modal>
 
       <Modal isOpen={isEditModalOpen} onClose={() => setIsEditModalOpen(false)}>
+        {/* ProductForm will need to be updated next to carry the theme inside the modal */}
         <ProductForm onSubmit={handleFormSubmitted} initialData={editingProduct} />
       </Modal>
 

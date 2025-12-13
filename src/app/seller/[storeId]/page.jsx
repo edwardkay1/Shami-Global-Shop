@@ -11,6 +11,10 @@ import LoadingSpinner from '../../components/LoadingSpinner';
 import ToastNotification from '../../components/ToastNotification';
 import Sidebar from '../../components/seller/Sidebar';
 
+// --- SHAMI GLOBAL SHOP DASHBOARD CONFIG ---
+const BASE_DASHBOARD_BG = 'bg-gray-50'; 
+const MAIN_CONTENT_BG = 'bg-white';
+
 export default function StoreDashboardPage() {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -104,7 +108,7 @@ export default function StoreDashboardPage() {
 
   if (error) {
     return (
-      <div className="flex items-center justify-center min-h-screen text-lg text-red-600 bg-[#f0f2f5]">
+      <div className={`flex items-center justify-center min-h-screen text-lg text-red-600 ${BASE_DASHBOARD_BG}`}>
         <p className="text-xl">{error}</p>
       </div>
     );
@@ -112,23 +116,24 @@ export default function StoreDashboardPage() {
 
   if (!user || !sellerProfile) {
     return (
-      <div className="flex items-center justify-center min-h-screen text-lg text-gray-600 bg-[#f0f2f5]">
+      <div className={`flex items-center justify-center min-h-screen text-lg text-gray-600 ${BASE_DASHBOARD_BG}`}>
         <p>Please log in to view the dashboard.</p>
       </div>
     );
   }
 
   return (
-    <div className="flex min-h-screen bg-gray-100">
+    // Updated overall background to match layout
+    <div className={`flex min-h-screen ${BASE_DASHBOARD_BG}`}>
       <div className="flex-shrink-0 hidden w-64 lg:block">
         <Sidebar sellerProfile={sellerProfile} />
       </div>
       <div className="flex flex-col flex-grow">
-        <header className="flex items-center justify-between p-4 bg-white shadow lg:hidden">
+        <header className={`flex items-center justify-between p-4 ${MAIN_CONTENT_BG} shadow lg:hidden`}>
           <h1 className="text-xl font-bold text-gray-800">Seller Dashboard</h1>
         </header>
         <main className="flex-grow p-6 overflow-auto">
-          <div className="p-6">
+          <div className={`p-6 ${MAIN_CONTENT_BG} rounded-xl shadow-lg`}>
             <h1 className="mb-6 text-3xl font-bold">Store Dashboard for {sellerProfile.storeName || storeId}</h1>
             <p className="text-xl">You have {products.length} products listed.</p>
             <p className="text-xl">You have {orders.length} pending orders.</p>
@@ -139,8 +144,6 @@ export default function StoreDashboardPage() {
         message={toast.message}
         type={toast.type}
         isVisible={toast.isVisible}
-
-
         onDismiss={() => setToast({ ...toast, isVisible: false })}
       />
     </div>

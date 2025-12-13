@@ -3,6 +3,11 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 
+// --- SHAMI GLOBAL SHOP ACCENT COLORS ---
+const ACCENT_TEXT_COLOR = 'text-[#E91E63]'; // Hot Pink/Magenta for text
+const ACCENT_HOVER_CLASS = 'hover:text-[#E91E63]'; // Hot Pink/Magenta for hover
+const BASE_LAYOUT_BG = 'bg-gray-50'; // Aligned with other layouts
+
 const faqs = [
   {
     category: "How It Works",
@@ -14,7 +19,7 @@ const faqs = [
             Our marketplace is currently <strong>free and open to everyone</strong>—no account needed to browse or buy.  
             Buyers add products to their cart and place orders <strong>directly via WhatsApp</strong>, where they communicate and negotiate with sellers for a trustworthy experience.
             <br /><br />
-            Sellers can register by clicking the <Link href="/auth?mode=register" className="text-[#2edc86] hover:underline">Become a Seller</Link> button, create their store, upload products, and manage them from a personalized dashboard.
+            Sellers can register by clicking the <Link href="/auth?mode=register" className={`${ACCENT_TEXT_COLOR} hover:underline`}>Become a Seller</Link> button, create their store, upload products, and manage them from a personalized dashboard.
           </>
         ),
       },
@@ -35,7 +40,7 @@ const faqs = [
               <li>Only communicate and negotiate through WhatsApp using the official contact details provided.</li>
               <li>Never share sensitive personal information or send money before confirming product details.</li>
               <li>Meet in public places if exchanging items in person.</li>
-              <li>Report suspicious sellers or buyers via our <a href="https://wa.me/25646838046" className="text-[#2edc86] hover:underline">support page</a>.</li>
+              <li>Report suspicious sellers or buyers via our <a href="https://wa.me/25646838046" className={`${ACCENT_TEXT_COLOR} hover:underline`}>support page</a>.</li>
             </ul>
           </>
         ),
@@ -64,7 +69,7 @@ const faqs = [
         question: "How do I create an account?",
         answer: (
           <>
-            To create an account, click the <Link href="/auth?mode=register" className="text-[#2edc86] hover:underline">Sign Up</Link> button at the top right and fill out the registration form.
+            To create an account, click the <Link href="/auth?mode=register" className={`${ACCENT_TEXT_COLOR} hover:underline`}>Sign Up</Link> button at the top right and fill out the registration form.
           </>
         ),
       },
@@ -72,7 +77,7 @@ const faqs = [
         question: "I forgot my password. How can I reset it?",
         answer: (
           <>
-            Click on <Link href="/forgot-password" className="text-[#2edc86] hover:underline">Forgot Password</Link> on the login page, enter your registered email, and follow the instructions sent to your inbox.
+            Click on <Link href="/forgot-password" className={`${ACCENT_TEXT_COLOR} hover:underline`}>Forgot Password</Link> on the login page, enter your registered email, and follow the instructions sent to your inbox.
           </>
         ),
       },
@@ -132,10 +137,10 @@ function FAQItem({ question, answer }) {
 
 export default function FAQsPage() {
   return (
-    <main className="min-h-screen p-8 font-sans bg-[#f0f2f5]">
+    <main className={`min-h-screen p-8 font-sans ${BASE_LAYOUT_BG}`}>
       <div className="max-w-5xl p-8 mx-auto bg-white shadow-lg rounded-xl">
-        {/* Back Button */}
-        <Link href="/" className="flex items-center text-gray-600 hover:text-[#2edc86] transition-colors mb-6">
+        {/* Back Button - Updated Hover Color */}
+        <Link href="/" className={`flex items-center text-gray-600 ${ACCENT_HOVER_CLASS} transition-colors mb-6`}>
           <ArrowLeft className="mr-2" size={20} />
           <span>Back to Home</span>
         </Link>
@@ -145,7 +150,7 @@ export default function FAQsPage() {
         </h1>
         <p className="max-w-xl mb-10 text-gray-600">
           Find answers to the most common questions about your account, orders, payments, and how our marketplace works.  
-          Can't find what you're looking for? <a href="https://wa.me/25646838046" className="text-[#2edc86] hover:underline">Contact our support team</a>.
+          Can't find what you're looking for? <a href="https://wa.me/25646838046" className={`${ACCENT_TEXT_COLOR} hover:underline`}>Contact our support team</a>.
         </p>
 
         {faqs.map(({ category, items }) => (

@@ -7,6 +7,9 @@ import { db, auth } from "@/app/firebase/config";
 
 const CartContext = createContext(null);
 
+// --- SHAMI GLOBAL SHOP DASHBOARD CONFIG ---
+const BASE_LAYOUT_BG = 'bg-gray-50'; 
+
 export default function CartProvider({ children }) {
   const [cartItems, setCartItems] = useState([]);
   const [user, setUser] = useState(null);
@@ -126,7 +129,8 @@ export default function CartProvider({ children }) {
 
   if (!isInitialized) {
     return (
-        <div className="flex items-center justify-center min-h-screen text-gray-500">
+        // Updated loading screen background
+        <div className={`flex items-center justify-center min-h-screen text-gray-500 ${BASE_LAYOUT_BG}`}>
             Loading cart...
         </div>
     );

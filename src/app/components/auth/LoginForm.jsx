@@ -1,4 +1,3 @@
-
 'use client';
 
 import { useState } from 'react';
@@ -12,6 +11,11 @@ import { Loader2 } from 'lucide-react';
 // Assuming 'auth' and 'ToastNotification' are correctly imported from your project files.
 import { auth } from '@/app/firebase/config';
 import ToastNotification from "@/app/components/ToastNotification";
+
+// --- SHAMI GLOBAL SHOP COLOR CONFIG ---
+const PRIMARY_COLOR = '#E91E63'; // Hot Pink/Magenta
+const PRIMARY_COLOR_HOVER = '#C2185B'; // Darker Pink for hover
+const PRIMARY_COLOR_RING = '#FF4081'; // Lighter Pink for focus ring
 
 // This is the separate component for the Forgot Password form.
 // It's rendered conditionally within the main component.
@@ -58,14 +62,16 @@ const ForgotPasswordForm = ({ onBackToLogin, setToast }) => {
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         required
-                        className="w-full px-4 py-3 border border-gray-300 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-[#2edc86] focus:border-transparent transition-all"
+                        // Focus ring updated to Hot Pink
+                        className={`w-full px-4 py-3 border border-gray-300 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-[${PRIMARY_COLOR_RING}] focus:border-transparent transition-all`}
                         placeholder="Enter your email"
                     />
                 </div>
                 <button
                     type="submit"
                     disabled={loading}
-                    className="w-full flex justify-center items-center py-3 px-4 border border-transparent rounded-xl shadow-sm text-lg font-semibold text-white bg-[#2edc86] hover:bg-[#25b36b] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#2edc86] disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                    // Button colors updated to Hot Pink
+                    className={`w-full flex justify-center items-center py-3 px-4 border border-transparent rounded-xl shadow-sm text-lg font-semibold text-white bg-[${PRIMARY_COLOR}] hover:bg-[${PRIMARY_COLOR_HOVER}] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[${PRIMARY_COLOR_RING}] disabled:opacity-50 disabled:cursor-not-allowed transition-colors`}
                 >
                     {loading ? <Loader2 className="w-5 h-5 mr-2 animate-spin" /> : 'Send Reset Link →'}
                 </button>
@@ -138,15 +144,15 @@ export default function LoginForm() {
     return (
         <div className="min-h-screen flex items-center justify-center p-4 bg-[#f0f2f5]">
             <div className="flex flex-col w-full max-w-4xl overflow-hidden bg-white shadow-2xl md:flex-row rounded-3xl">
-                {/* Left Section - Aesthetic Background */}
-                <div className="relative flex flex-col items-center justify-between p-8 text-center text-white md:w-1/2 bg-gradient-to-br from-teal-400 to-green-600">
+                {/* Left Section - Aesthetic Background (Hot Pink Gradient) */}
+                <div className="relative flex flex-col items-center justify-between p-8 text-center text-white md:w-1/2 bg-gradient-to-br from-[#FF4081] to-[#E91E63]">
                     {/* Abstract shapes for design */}
                     <div className="absolute inset-0 opacity-20">
                         <svg className="w-full h-full" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-                            <circle cx="10%" cy="10%" r="15" fill="currentColor" className="text-emerald-300" />
-                            <circle cx="90%" cy="20%" r="20" fill="currentColor" className="text-orange-300" />
-                            <circle cx="20%" cy="80%" r="18" fill="currentColor" className="text-blue-300" />
-                            <circle cx="70%" cy="90%" r="25" fill="currentColor" className="text-purple-300" />
+                            <circle cx="10%" cy="10%" r="15" fill="currentColor" className="text-pink-300" />
+                            <circle cx="90%" cy="20%" r="20" fill="currentColor" className="text-red-300" />
+                            <circle cx="20%" cy="80%" r="18" fill="currentColor" className="text-purple-300" />
+                            <circle cx="70%" cy="90%" r="25" fill="currentColor" className="text-fuchsia-300" />
                             <rect x="30%" y="40%" width="40" height="40" rx="10" fill="currentColor" className="text-yellow-300" />
                         </svg>
                     </div>
@@ -179,7 +185,8 @@ export default function LoginForm() {
                                     value={email}
                                     onChange={(e) => setEmail(e.target.value)}
                                     required
-                                    className="w-full px-4 py-3 border border-gray-300 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-[#2edc86] focus:border-transparent transition-all"
+                                    // Focus ring updated to Hot Pink
+                                    className={`w-full px-4 py-3 border border-gray-300 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-[${PRIMARY_COLOR_RING}] focus:border-transparent transition-all`}
                                     placeholder="Enter your email"
                                 />
                             </div>
@@ -192,7 +199,8 @@ export default function LoginForm() {
                                         value={password}
                                         onChange={(e) => setPassword(e.target.value)}
                                         required
-                                        className="w-full px-4 py-3 border border-gray-300 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-[#2edc86] focus:border-transparent transition-all pr-10"
+                                        // Focus ring updated to Hot Pink
+                                        className={`w-full px-4 py-3 border border-gray-300 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-[${PRIMARY_COLOR_RING}] focus:border-transparent transition-all pr-10`}
                                         placeholder="Enter password"
                                     />
                                     <button
@@ -218,7 +226,8 @@ export default function LoginForm() {
                             <button
                                 type="submit"
                                 disabled={loading}
-                                className="w-full flex justify-center items-center py-3 px-4 border border-transparent rounded-xl shadow-sm text-lg font-semibold text-white bg-[#2edc86] hover:bg-[#25b36b] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#2edc86] disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                                // Button colors updated to Hot Pink
+                                className={`w-full flex justify-center items-center py-3 px-4 border border-transparent rounded-xl shadow-sm text-lg font-semibold text-white bg-[${PRIMARY_COLOR}] hover:bg-[${PRIMARY_COLOR_HOVER}] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[${PRIMARY_COLOR_RING}] disabled:opacity-50 disabled:cursor-not-allowed transition-colors`}
                             >
                                 {loading ? <Loader2 className="w-5 h-5 mr-2 animate-spin" /> : 'Sign In →'}
                             </button>

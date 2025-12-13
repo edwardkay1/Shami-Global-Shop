@@ -3,12 +3,20 @@ import React from 'react';
 import Link from 'next/link';
 import { ArrowLeft } from 'lucide-react';
 
+// --- SHAMI GLOBAL SHOP ACCENT COLORS ---
+const ACCENT_TEXT_COLOR = 'text-[#E91E63]'; // Hot Pink/Magenta for text
+const ACCENT_HOVER_CLASS = 'hover:text-[#E91E63]'; // Hot Pink/Magenta for hover
+const BASE_LAYOUT_BG = 'bg-gray-50'; // Aligned with other layouts
+
 export default function HelpPage() {
   return (
-    <main className="min-h-screen p-8 font-sans bg-[#f0f2f5]">
+    <main className={`min-h-screen p-8 font-sans ${BASE_LAYOUT_BG}`}>
       <div className="max-w-4xl p-8 mx-auto bg-white shadow-lg rounded-xl">
-        {/* Back Button */}
-        <Link href="/" className="flex items-center text-gray-600 hover:text-[#2edc86] transition-colors mb-6">
+        {/* Back Button - Updated Hover Color */}
+        <Link 
+          href="/" 
+          className={`flex items-center text-gray-600 ${ACCENT_HOVER_CLASS} transition-colors mb-6`}
+        >
           <ArrowLeft className="mr-2" size={20} />
           <span>Back to Home</span>
         </Link>
@@ -25,16 +33,20 @@ export default function HelpPage() {
           </h2>
           <ul className="space-y-2 list-disc list-inside">
             <li>
-              <Link href="/faqs" className="text-[#2edc86] hover:underline">Frequently Asked Questions (FAQs)</Link>
+              {/* Updated Link Text Color */}
+              <Link href="/faqs" className={`${ACCENT_TEXT_COLOR} hover:underline`}>Frequently Asked Questions (FAQs)</Link>
             </li>
             <li>
-              <Link href="/faqs" className="text-[#2edc86] hover:underline">How It Works</Link>
+              {/* Updated Link Text Color */}
+              <Link href="/faqs" className={`${ACCENT_TEXT_COLOR} hover:underline`}>How It Works</Link>
             </li>
             <li>
-              <Link href="/terms" className="text-[#2edc86] hover:underline">Terms & Conditions</Link>
+              {/* Updated Link Text Color */}
+              <Link href="/terms" className={`${ACCENT_TEXT_COLOR} hover:underline`}>Terms & Conditions</Link>
             </li>
             <li>
-              <Link href="/privacy" className="text-[#2edc86] hover:underline">Privacy Policy</Link>
+              {/* Updated Link Text Color */}
+              <Link href="/privacy" className={`${ACCENT_TEXT_COLOR} hover:underline`}>Privacy Policy</Link>
             </li>
           </ul>
         </section>
@@ -48,7 +60,17 @@ export default function HelpPage() {
             If you can’t find what you’re looking for, feel free to reach out to our support team. We’re here to help!
           </p>
           <address className="space-y-2 not-italic text-gray-700">
-            <div>WhatsApp: <a href="https://wa.me/256746838046" target="_blank" rel="noopener noreferrer" className="text-[#2edc86] hover:underline">Chat with us on WhatsApp</a></div>
+            <div>
+              WhatsApp: <a 
+                href="https://wa.me/256746838046" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                // Updated Link Text Color
+                className={`${ACCENT_TEXT_COLOR} hover:underline`}
+              >
+                Chat with us on WhatsApp
+              </a>
+            </div>
           </address>
         </section>
       </div>

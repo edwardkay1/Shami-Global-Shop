@@ -13,6 +13,10 @@ import Sidebar from '../components/seller/Sidebar';
 import DashboardStats from '../components/seller/DashboardStats';
 import ProductForm from '../components/seller/ProductForm'; // Assuming this is also a dashboard component
 
+// --- SHAMI GLOBAL SHOP DASHBOARD CONFIG ---
+const BASE_DASHBOARD_BG = 'bg-white'; // Changed to pure white/silver background
+const FALLBACK_BG = 'bg-gray-50'; // Slightly lighter fallback for un-profiled user welcome
+
 /**
  * The main component for the seller's dashboard.
  * It handles authentication, fetches real-time data from Firestore,
@@ -111,7 +115,7 @@ export default function SellerDashboardHome() {
   // If user is authenticated but no profile exists, show a different message.
   if (!sellerProfile) {
     return (
-      <div className="flex flex-col items-center justify-center min-h-screen text-lg text-gray-600 bg-[#f0f2f5] p-6 text-center">
+      <div className={`flex flex-col items-center justify-center min-h-screen text-lg text-gray-600 ${FALLBACK_BG} p-6 text-center`}>
         <p className="mb-4">Welcome to your dashboard! Please create your seller profile to get started.</p>
         <div className="w-full max-w-2xl">
           <ProductForm />
@@ -121,9 +125,11 @@ export default function SellerDashboardHome() {
   }
 
   return (
-    <div className="flex min-h-screen bg-gray-100">
+    // Updated background to BASE_DASHBOARD_BG (white/silver)
+    <div className={`flex min-h-screen ${BASE_DASHBOARD_BG}`}>
       <div className="flex-shrink-0 hidden w-64 lg:block">
-        <Sidebar sellerProfile={sellerProfile} />
+        {/* Sidebar Component: Assumes it will be updated later */}
+        <Sidebar sellerProfile={sellerProfile} /> 
       </div>
       <div className="flex flex-col flex-grow">
         <header className="flex items-center justify-between p-4 bg-white shadow lg:hidden">

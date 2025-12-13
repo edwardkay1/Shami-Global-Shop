@@ -1,4 +1,3 @@
-
 'use client';
 
 import { useState, useEffect } from 'react';
@@ -14,6 +13,12 @@ import LoadingSpinner from "../LoadingSpinner";
 // Use your actual Cloudinary cloud name and upload preset here
 const CLOUDINARY_CLOUD_NAME = 'dzflajft3';
 const CLOUDINARY_UPLOAD_PRESET = 'marketplace_products_upload'; // Replace with your upload preset
+
+// --- SHAMI GLOBAL SHOP ACCENT COLORS ---
+const ACCENT_COLOR = '#E91E63'; // Hot Pink/Magenta
+const ACCENT_DARK_HOVER = '#C2185B'; // Darker Pink for button hover
+const ACCENT_RING_COLOR = 'focus:ring-[#E91E63]';
+const BASE_LAYOUT_BG = 'bg-gray-50'; // Aligned with other layouts
 
 // Define a list of categories for the dropdown
 const categories = [
@@ -220,7 +225,7 @@ export default function ProductForm({ onSubmit, initialData }) {
   };
 
   return (
-    <div className="relative bg-[#f0f2f5] p-4 sm:p-6 lg:p-8 min-h-screen flex items-center justify-center">
+    <div className={`relative ${BASE_LAYOUT_BG} p-4 sm:p-6 lg:p-8 min-h-screen flex items-center justify-center`}>
       <div className="w-full max-w-xl p-6 bg-white shadow-lg rounded-3xl sm:p-8 lg:p-10 max-h-[95vh] overflow-y-auto">
         <form onSubmit={handleSubmit} className="space-y-6">
           <h2 className="text-3xl font-bold text-center text-gray-800">
@@ -233,7 +238,8 @@ export default function ProductForm({ onSubmit, initialData }) {
                 type="text"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                className="w-full p-3 mt-1 border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#2edc86] bg-white text-gray-800 placeholder-gray-400"
+                // Updated focus ring color
+                className={`w-full p-3 mt-1 border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-2 ${ACCENT_RING_COLOR} bg-white text-gray-800 placeholder-gray-400`}
                 placeholder="e.g., iPhone 14"
               />
             </div>
@@ -244,7 +250,8 @@ export default function ProductForm({ onSubmit, initialData }) {
                 type="number"
                 value={price}
                 onChange={(e) => setPrice(e.target.value)}
-                className="w-full p-3 mt-1 border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#2edc86] bg-white text-gray-800 placeholder-gray-400"
+                // Updated focus ring color
+                className={`w-full p-3 mt-1 border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-2 ${ACCENT_RING_COLOR} bg-white text-gray-800 placeholder-gray-400`}
                 placeholder="e.g., 1200000"
               />
             </div>
@@ -254,7 +261,8 @@ export default function ProductForm({ onSubmit, initialData }) {
               <textarea
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
-                className="w-full p-3 mt-1 border-2 border-gray-200 rounded-xl h-24 resize-none focus:outline-none focus:ring-2 focus:ring-[#2edc86] bg-white text-gray-800 placeholder-gray-400"
+                // Updated focus ring color
+                className={`w-full p-3 mt-1 border-2 border-gray-200 rounded-xl h-24 resize-none focus:outline-none focus:ring-2 ${ACCENT_RING_COLOR} bg-white text-gray-800 placeholder-gray-400`}
                 placeholder="Write a short product description..."
               />
             </div>
@@ -265,7 +273,8 @@ export default function ProductForm({ onSubmit, initialData }) {
                 type="file"
                 accept="image/*"
                 onChange={handleImageChange}
-                className="w-full mt-1 text-gray-700 file:mr-4 file:py-2 file:px-6 file:rounded-xl file:border-0 file:text-sm file:font-semibold file:bg-[#2edc86] file:text-white hover:file:bg-[#25b36b] transition-colors cursor-pointer"
+                // Updated file input button styles
+                className={`w-full mt-1 text-gray-700 file:mr-4 file:py-2 file:px-6 file:rounded-xl file:border-0 file:text-sm file:font-semibold file:bg-[${ACCENT_COLOR}] file:text-white hover:file:bg-[${ACCENT_DARK_HOVER}] transition-colors cursor-pointer`}
               />
               {previewURL && (
                 <div className="relative w-full h-40 mt-4 overflow-hidden shadow-inner rounded-xl">
@@ -285,7 +294,8 @@ export default function ProductForm({ onSubmit, initialData }) {
                 <select
                     value={category}
                     onChange={(e) => setCategory(e.target.value)}
-                    className="w-full p-3 mt-1 border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#2edc86] bg-white text-gray-800"
+                    // Updated focus ring color
+                    className={`w-full p-3 mt-1 border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-2 ${ACCENT_RING_COLOR} bg-white text-gray-800`}
                     required
                 >
                     <option value="" disabled>Select a category</option>
@@ -300,7 +310,9 @@ export default function ProductForm({ onSubmit, initialData }) {
           <button
             type="submit"
             disabled={loading}
-            className="w-full py-4 text-white bg-[#2edc86] rounded-2xl font-bold hover:bg-[#25b36b] transition-colors shadow-lg transform active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center"
+            // Updated Submit Button Styles (BG and Hover)
+            style={{ backgroundColor: ACCENT_COLOR }} // Use style for explicit BG color for strong adherence
+            className={`w-full py-4 text-white rounded-2xl font-bold hover:bg-[${ACCENT_DARK_HOVER}] transition-colors shadow-lg transform active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center`}
           >
             {loading ? <LoadingSpinner /> : (initialData ? 'Update Product' : 'Add Product')}
           </button>
@@ -315,4 +327,3 @@ export default function ProductForm({ onSubmit, initialData }) {
     </div>
   );
 }
-
