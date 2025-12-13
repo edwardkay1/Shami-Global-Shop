@@ -1,26 +1,36 @@
 // next.config.mjs
-import withPWA from 'next-pwa';
+import withPWA from "next-pwa";
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  experimental: {
+    turbo: false, // 🔑 REQUIRED for next-pwa
+  },
+
   images: {
-    domains: [
-      'res.cloudinary.com',
-      'placehold.co',
-      // This is the correct domain for Firebase Storage images
-      'firebasestorage.googleapis.com',
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "res.cloudinary.com",
+      },
+      {
+        protocol: "https",
+        hostname: "placehold.co",
+      },
+      {
+        protocol: "https",
+        hostname: "firebasestorage.googleapis.com",
+      },
     ],
-    // Allow SVGs from configured domains
     dangerouslyAllowSVG: true,
   },
 };
 
-// Wrap the nextConfig with the PWA configuration
 const pwaConfig = withPWA({
-  dest: 'public',
+  dest: "public",
   register: true,
   skipWaiting: true,
-  disable: process.env.NODE_ENV === 'development',
+  disable: process.env.NODE_ENV === "development",
 })(nextConfig);
 
 export default pwaConfig;
