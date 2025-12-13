@@ -10,30 +10,44 @@ import { collection, getDocs, query, where } from "firebase/firestore";
 import { db } from "./firebase/config.js";
 
 // --- SHAMI GLOBAL SHOP UI/UX CONFIGURATION (Hot Pink/Silver) ---
-const ACCENT_COLOR = 'bg-[#E91E63]'; // Hot Pink/Magenta
+const PRIMARY_COLOR_PINK = '#E91E63'; // Hot Pink/Magenta
+const PRIMARY_HOVER_PINK = '#C2185B'; // Darker Pink for hover
 const ACCENT_TEXT_COLOR = 'text-white'; // White/Silver for contrast
+
+// Derived classes for Tailwind arbitrary values
+const ACCENT_COLOR_CLASS = `bg-[${PRIMARY_COLOR_PINK}]`;
+const ACCENT_HOVER_CLASS = `hover:bg-[${PRIMARY_HOVER_PINK}]`;
+const ACCENT_TEXT_PINK_CLASS = `text-[${PRIMARY_COLOR_PINK}]`;
+
 const PRIMARY_COLOR = 'bg-[#333333]'; // Dark Gray for secondary buttons/text
+const PRIMARY_HOVER_GRAY = 'hover:bg-gray-600';
+
 const BASE_BG = 'bg-white';
 const BODY_BG = 'bg-gray-50'; // Slightly lighter background
 
 // Updated list of categories with 'All' first
 const categories = [
   "All", 
-  "Lifestyle",
-  "Basketball",
-  "Running",
-  "Fashion & Apparel",
-  "Electronics",
-  "Groceries",
-  "Home & Kitchen",
-  "Other",
+  'Skin Care',
+  'Perfumes',
+  'Women’s Clothing',
+  'Men’s Clothing',
+  'Shoes',
+  'Bags & Accessories',
+  'Sportswear',
+  'Jewelry & Watches',
+  'Hair & Beauty',
+  'Kids & Baby Items',
+  'Pet Accessories',
+  'Stationery & School Supplies',
+  'Other',
 ];
 
 // Banner data for the two specified slides
 const dynamicBanners = [
   { 
     id: 1, 
-    title: "Pink Friday Xmas Drop 💖🎄", 
+    title: "Pink Xmas Drop 💖🎄", 
     discount: "Up to 60% OFF Global Finds", 
     buttonText: "Shop the Vibe", 
     img: "/xbaby.png", 
@@ -42,7 +56,7 @@ const dynamicBanners = [
   { 
     id: 2, 
     title: "New Year Glow-Up ✨", 
-    discount: "Beauty • Fashion • Tech", 
+    discount: "Beauty • Fashion • Vibe", 
     buttonText: "Start Fresh", 
     img: "/xtree.png", 
     bgColor: "from-purple-700 to-indigo-500",
@@ -111,8 +125,8 @@ const ProductCard = ({ item, addToCart }) => {
                 </p>
                 <button
                     onClick={() => addToCart(item)}
-                    // PRIMARY_COLOR used here
-                    className={`p-1.5 text-white transition-colors ${PRIMARY_COLOR} rounded-lg shadow-sm hover:bg-gray-600`}
+                    // PRIMARY_COLOR (Dark Gray) used here
+                    className={`p-1.5 text-white transition-colors ${PRIMARY_COLOR} rounded-lg shadow-sm ${PRIMARY_HOVER_GRAY}`}
                     title="Add to Cart"
                 >
                     <Plus className="w-4 h-4" />
@@ -143,8 +157,8 @@ const LatestProductCard = ({ item, addToCart }) => {
                     priority
                 />
                 <span 
-                    // ACCENT_COLOR and ACCENT_TEXT_COLOR used here
-                    className={`absolute top-2 left-2 px-2 py-0.5 text-xs font-bold ${ACCENT_TEXT_COLOR} ${ACCENT_COLOR} rounded-full shadow-md`}
+                    // ACCENT_COLOR (Hot Pink) and ACCENT_TEXT_COLOR (White) used here
+                    className={`absolute top-2 left-2 px-2 py-0.5 text-xs font-bold ${ACCENT_TEXT_COLOR} ${ACCENT_COLOR_CLASS} rounded-full shadow-md`}
                 >
                     NEW
                 </span>
@@ -163,8 +177,8 @@ const LatestProductCard = ({ item, addToCart }) => {
                 </p>
                 <button
                     onClick={() => addToCart(item)}
-                    // PRIMARY_COLOR used here
-                    className={`p-1.5 text-white transition-colors ${PRIMARY_COLOR} rounded-lg shadow-sm hover:bg-gray-600`}
+                    // PRIMARY_COLOR (Dark Gray) used here
+                    className={`p-1.5 text-white transition-colors ${PRIMARY_COLOR} rounded-lg shadow-sm ${PRIMARY_HOVER_GRAY}`}
                     title="Add to Cart"
                 >
                     <Plus className="w-4 h-4" />
@@ -184,7 +198,6 @@ export default function HomePage() {
   
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("All"); 
-  // sortOption removed per request, defaults to Latest
   const [currentBannerIndex, setCurrentBannerIndex] = useState(0); 
   const [products, setProducts] = useState([]);
   const [sellers, setSellers] = useState({});
@@ -295,15 +308,12 @@ export default function HomePage() {
     });
 
     // 2. Default Sort (Latest) and Smart Shuffle for Recommended Grid (Main Display)
-    // The Amazon-like 'algo' here prioritizes newness and then randomizes/shuffles for variety.
-    // We assume the ID sorting is sufficient for 'Latest' since no timestamp field is defined.
     const sortedLatest = [...products].sort((a, b) => b.id.localeCompare(a.id)); 
     
     // Latest Products for horizontal slider (Top 10)
     const latest = sortedLatest.slice(0, 10);
 
     // Main Recommended Grid (Filtered Products)
-    // Sort by latest, then apply a partial shuffle to keep the top results fresh but mixed.
     const finalFilteredProducts = [...currentProducts].sort((a, b) => b.id.localeCompare(a.id)); 
     // Applying a light shuffle to the first 50 results (conceptual 'relevance' shuffle)
     if (!searchTerm && selectedCategory === "All") {
@@ -324,17 +334,20 @@ export default function HomePage() {
       {/* -------------------- 1. TOP NAV BAR (STATIONARY) -------------------- */}
       <nav className={`sticky top-0 z-50 flex items-center p-4 ${BASE_BG} shadow-sm md:shadow-md`}>
         
-        {/* Left Section (Menu Icon / Logo) */}
+        {/* Left Section (Logo/Link to Auth) */}
         <div className="flex items-center flex-shrink-0 space-x-2">
-            <button
-              onClick={toggleMenu}
-              className={`flex items-center justify-center w-8 h-8 text-black rounded-lg transition-colors md:hidden`}
-              aria-label="Toggle menu"
-            >
-              {menuOpen ? <X size={24} /> : <Menu size={24} />}
-            </button>
-             {/* Logo/Title for Desktop or if no menu icon needed */}
-            <Link href="/" className="hidden text-xl font-bold text-gray-800 md:block">Shami Global Shopper</Link>
+            
+            {/* MOBILE: Logo link (replaces menu icon) */}
+            <Link href="/auth?mode=login" className="flex items-center space-x-2 md:hidden" aria-label="Go to Login/Auth">
+                <Image src="/favicon.png" alt="Shami Global Shop Logo" width={32} height={32} className="w-8 h-8 rounded-full" />
+            </Link>
+            
+             {/* DESKTOP: Logo and Title (Link to Auth) */}
+            <Link href="/auth?mode=login" className="items-center hidden space-x-2 md:flex group" aria-label="Go to Login/Auth">
+                <Image src="/favicon.png" alt="Shami Global Shop Logo" width={32} height={32} className="w-8 h-8 rounded-full" />
+                {/* Hot Pink Text */}
+                <span className={`text-xl font-bold ${ACCENT_TEXT_PINK_CLASS} transition-colors group-hover:text-gray-800`}>Shami Global Shopper</span>
+            </Link>
         </div>
         
         {/* Center Section (Search Bar - Responsive) */}
@@ -346,7 +359,7 @@ export default function HomePage() {
                 placeholder="Search products, sellers, or categories..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className={`w-full px-4 py-2 pl-10 text-sm border border-gray-200 rounded-full focus:outline-none focus:ring-1 focus:ring-gray-300 ${BASE_BG} md:py-3 md:pl-12 md:text-base`}
+                className={`w-full px-4 py-2 pl-10 text-sm border border-gray-200 rounded-full focus:outline-none focus:ring-2 focus:ring-[${PRIMARY_COLOR_PINK}] ${BASE_BG} md:py-3 md:pl-12 md:text-base`}
               />
               <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                 <Search className="w-4 h-4 text-gray-400 md:w-5 md:h-5" />
@@ -366,12 +379,15 @@ export default function HomePage() {
             )}
         </Link>
 
-        {/* Mobile Menu Dropdown (Kept unchanged) */}
+        {/* Mobile Menu Dropdown (Removed the Menu Button, so this is now unreachable 
+           unless triggered by some other element, but keeping the content structure 
+           if the user intends to re-add a button later.) */}
         {menuOpen && (
           <div className={`absolute left-0 right-0 flex flex-col items-start p-4 space-y-2 ${BASE_BG} border-t border-gray-100 shadow-lg top-16 md:hidden`}>
             <Link href="/about" className="w-full px-3 py-2 text-lg text-gray-800 transition-colors duration-200 rounded-md hover:text-black hover:bg-gray-50">About</Link>
-            <Link href="/auth?mode=register" className={`w-full px-3 py-2 text-lg font-semibold text-white transition-colors duration-200 ${ACCENT_COLOR} rounded-md shadow-md text-center hover:bg-[#C2185B]`}>Become a Seller</Link>
+            <Link href="/auth?mode=register" className={`w-full px-3 py-2 text-lg font-semibold ${ACCENT_TEXT_COLOR} transition-colors duration-200 ${ACCENT_COLOR_CLASS} rounded-md shadow-md text-center ${ACCENT_HOVER_CLASS}`}>Become a Seller</Link>
             <Link href="/auth?mode=login" className="w-full px-3 py-2 text-lg font-semibold text-gray-800 transition-colors duration-200 rounded-md hover:text-black hover:bg-gray-50">Sign In</Link>
+            {/* Note: The menuOpen state and toggleMenu function are now unused since the button was removed */}
           </div>
         )}
       </nav>
@@ -394,11 +410,11 @@ export default function HomePage() {
                     <h1 className="text-xl font-bold text-white md:text-3xl">
                         {banner.title}
                     </h1>
-                    <p className={`text-3xl font-extrabold ${ACCENT_COLOR === 'bg-[#E91E63]' ? 'text-gray-900' : ACCENT_TEXT_COLOR} mt-1 mb-3 bg-white px-2 py-0.5 rounded-lg inline-block shadow-sm md:text-4xl`}>
+                    <p className={`text-3xl font-extrabold text-gray-900 mt-1 mb-3 bg-white px-2 py-0.5 rounded-lg inline-block shadow-sm md:text-4xl`}>
                         {banner.discount}
                     </p>
                     <button 
-                        className={`px-6 py-2 text-sm font-semibold ${ACCENT_COLOR === 'bg-[#E91E63]' ? 'text-gray-800' : ACCENT_TEXT_COLOR} transition-colors ${BASE_BG} rounded-full shadow-lg hover:bg-gray-200`}
+                        className={`px-6 py-2 text-sm font-semibold text-gray-800 transition-colors ${BASE_BG} rounded-full shadow-lg hover:bg-gray-200`}
                     >
                         {banner.buttonText}
                     </button>
@@ -461,9 +477,9 @@ export default function HomePage() {
                         data-category={cat}
                         onClick={() => setSelectedCategory(cat)}
                         className={`flex-shrink-0 px-5 py-2 text-sm font-medium rounded-full transition-all duration-200 shadow-sm border whitespace-nowrap ${
-                            // ACCENT_COLOR and ACCENT_TEXT_COLOR used here
+                            // ACCENT_COLOR (Hot Pink) used here
                             selectedCategory === cat
-                                ? `${ACCENT_COLOR} ${ACCENT_TEXT_COLOR} border-transparent shadow-md hover:bg-[#C2185B]` 
+                                ? `${ACCENT_COLOR_CLASS} ${ACCENT_TEXT_COLOR} border-transparent shadow-md ${ACCENT_HOVER_CLASS}` 
                                 : `bg-white text-gray-700 border-gray-300 hover:bg-gray-50`
                         } flex items-center space-x-2`}
                     >
@@ -501,7 +517,6 @@ export default function HomePage() {
                             : "Recommended for You"
                     }
                 </h2>
-                {/* Sort dropdown removed per request */}
             </div>
             
             <div className="grid grid-cols-2 gap-4 pb-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
@@ -529,8 +544,8 @@ export default function HomePage() {
           
           {/* Home */}
           <Link href="/" className="flex flex-col items-center text-xs font-medium text-black">
-            <div className={`flex items-center justify-center w-12 h-12 rounded-full ${ACCENT_COLOR} shadow-md`}>
-              <Home className={`w-5 h-5 ${ACCENT_TEXT_COLOR}`} fill={ACCENT_TEXT_COLOR} />
+            <div className={`flex items-center justify-center w-12 h-12 rounded-full ${ACCENT_COLOR_CLASS} shadow-md`}>
+              <Home className={`w-5 h-5 ${ACCENT_TEXT_COLOR}`} fill="currentColor" />
             </div>
           </Link>
           
@@ -542,8 +557,8 @@ export default function HomePage() {
             className="flex flex-col items-center text-gray-500 transition-colors"
             aria-label="Activate Search"
           >
-             {/* PRIMARY_COLOR used here for contrast */}
-             <div className={`flex items-center justify-center w-12 h-12 -mt-5 ${ACCENT_COLOR} rounded-full shadow-xl hover:bg-[#C2185B] transition-colors`}>
+             {/* Hot Pink used here for contrast */}
+             <div className={`flex items-center justify-center w-12 h-12 -mt-5 ${ACCENT_COLOR_CLASS} rounded-full shadow-xl ${ACCENT_HOVER_CLASS} transition-colors`}>
               <Search className="w-6 h-6 text-white" />
             </div>
           </button>

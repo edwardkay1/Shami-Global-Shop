@@ -3,44 +3,42 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 
-// --- SHAMI GLOBAL SHOP ACCENT COLORS ---
-const ACCENT_TEXT_COLOR = 'text-[#E91E63]'; // Hot Pink/Magenta for text
-const ACCENT_HOVER_CLASS = 'hover:text-[#E91E63]'; // Hot Pink/Magenta for hover
-const BASE_LAYOUT_BG = 'bg-gray-50'; // Aligned with other layouts
+const ACCENT_TEXT_COLOR = 'text-[#E91E63]';
+const ACCENT_HOVER_CLASS = 'hover:text-[#E91E63]';
+const BASE_LAYOUT_BG = 'bg-gray-50';
 
 const faqs = [
   {
     category: "How It Works",
     items: [
       {
-        question: "How does the marketplace work?",
+        question: "How does Shami work?",
         answer: (
           <>
-            Our marketplace is currently <strong>free and open to everyone</strong>—no account needed to browse or buy.  
-            Buyers add products to their cart and place orders <strong>directly via WhatsApp</strong>, where they communicate and negotiate with sellers for a trustworthy experience.
-            <br /><br />
-            Sellers can register by clicking the <Link href="/auth?mode=register" className={`${ACCENT_TEXT_COLOR} hover:underline`}>Become a Seller</Link> button, create their store, upload products, and manage them from a personalized dashboard.
+            Shami is your go-to for original products straight from Korea, Japan, Shein, Amazon, and Fashion Nova.  
+            <strong>No other platform ships like we do.</strong> You browse, add to cart, and place your order directly via WhatsApp. We handle everything and deliver to your doorstep in ~2 weeks. 🚀  
+            Sellers register by clicking <Link href="/auth?mode=register" className={`${ACCENT_TEXT_COLOR} hover:underline`}>Become a Seller</Link> and manage their products from a personalized dashboard.
           </>
         ),
       },
       {
-        question: "Is there order tracking available?",
+        question: "Can I track my order?",
         answer: (
           <>
-            Currently, order tracking is not available on the platform. All communication and negotiation happen directly between buyer and seller via WhatsApp to ensure transparency and trust.
+            Not yet — all orders are coordinated via WhatsApp for a personal touch. We promise fast delivery and transparent communication.
           </>
         ),
       },
       {
-        question: "How can I avoid scams?",
+        question: "How do I avoid scams?",
         answer: (
           <>
-            While we work to maintain a safe marketplace, please stay alert:
+            Stay safe with these tips:
             <ul className="mt-2 text-gray-700 list-disc list-inside">
-              <li>Only communicate and negotiate through WhatsApp using the official contact details provided.</li>
-              <li>Never share sensitive personal information or send money before confirming product details.</li>
-              <li>Meet in public places if exchanging items in person.</li>
-              <li>Report suspicious sellers or buyers via our <a href="https://wa.me/25646838046" className={`${ACCENT_TEXT_COLOR} hover:underline`}>support page</a>.</li>
+              <li>Always chat through the official WhatsApp links.</li>
+              <li>Never send money before confirming details with Shami.</li>
+              <li>Meet in public if doing in-person exchanges.</li>
+              <li>Report sketchy behavior via <a href="https://wa.me/256778997693" className={`${ACCENT_TEXT_COLOR} hover:underline`}>WhatsApp support</a>.</li>
             </ul>
           </>
         ),
@@ -51,50 +49,26 @@ const faqs = [
     category: "Orders & Delivery",
     items: [
       {
-        question: "How do shipping, delivery, and payment work?",
+        question: "How does shipping & payment work?",
         answer: (
           <>
-            Shipping, delivery, and payment terms are <strong>directly negotiated between the buyer and seller on WhatsApp</strong>.  
-            We recommend opting for <strong>payment on delivery</strong> to reduce risks and build trust.  
-            Always confirm all details with the seller before completing any payment.
+            Shami delivers your order straight to your door. Payment is handled on WhatsApp directly with the seller — we recommend <strong>payment on delivery</strong> for safety.
           </>
         ),
       },
     ],
   },
-  {
-    category: "Account",
-    items: [
-      {
-        question: "How do I create an account?",
-        answer: (
-          <>
-            To create an account, click the <Link href="/auth?mode=register" className={`${ACCENT_TEXT_COLOR} hover:underline`}>Sign Up</Link> button at the top right and fill out the registration form.
-          </>
-        ),
-      },
-      {
-        question: "I forgot my password. How can I reset it?",
-        answer: (
-          <>
-            Click on <Link href="/forgot-password" className={`${ACCENT_TEXT_COLOR} hover:underline`}>Forgot Password</Link> on the login page, enter your registered email, and follow the instructions sent to your inbox.
-          </>
-        ),
-      },
-    ],
-  },
+  
   {
     category: "Payments",
     items: [
       {
         question: "What payment methods do you accept?",
-        answer:
-          "Payment methods are decided between buyers and sellers on WhatsApp. We recommend payment on delivery to ensure security and trust.",
+        answer: "Payment is arranged between buyer and seller on WhatsApp. We suggest payment on delivery for secure transactions.",
       },
       {
-        question: "Is my payment information secure?",
-        answer:
-          "Payments are handled directly between buyers and sellers outside this platform, so always follow safe practices during transactions.",
+        question: "Is my payment info safe?",
+        answer: "All payments happen directly via WhatsApp between you and the seller. Always follow safe practices.",
       },
     ],
   },
@@ -102,7 +76,6 @@ const faqs = [
 
 function FAQItem({ question, answer }) {
   const [open, setOpen] = useState(false);
-
   return (
     <div className="py-4 border-b border-gray-200">
       <button
@@ -139,25 +112,19 @@ export default function FAQsPage() {
   return (
     <main className={`min-h-screen p-8 font-sans ${BASE_LAYOUT_BG}`}>
       <div className="max-w-5xl p-8 mx-auto bg-white shadow-lg rounded-xl">
-        {/* Back Button - Updated Hover Color */}
         <Link href="/" className={`flex items-center text-gray-600 ${ACCENT_HOVER_CLASS} transition-colors mb-6`}>
           <ArrowLeft className="mr-2" size={20} />
           <span>Back to Home</span>
         </Link>
         
-        <h1 className="mb-6 text-4xl font-extrabold text-gray-900">
-          Frequently Asked Questions
-        </h1>
+        <h1 className="mb-6 text-4xl font-extrabold text-gray-900">FAQs</h1>
         <p className="max-w-xl mb-10 text-gray-600">
-          Find answers to the most common questions about your account, orders, payments, and how our marketplace works.  
-          Can't find what you're looking for? <a href="https://wa.me/25646838046" className={`${ACCENT_TEXT_COLOR} hover:underline`}>Contact our support team</a>.
+          Answers to your most common questions. Can’t find what you need? <a href="https://wa.me/256778997693" className={`${ACCENT_TEXT_COLOR} hover:underline`}>Chat with Shami on WhatsApp</a>.
         </p>
 
         {faqs.map(({ category, items }) => (
           <section key={category} className="mb-10">
-            <h2 className="pb-2 mb-4 text-2xl font-semibold text-gray-800 border-b border-gray-300">
-              {category}
-            </h2>
+            <h2 className="pb-2 mb-4 text-2xl font-semibold text-gray-800 border-b border-gray-300">{category}</h2>
             <div>
               {items.map(({ question, answer }, idx) => (
                 <FAQItem key={idx} question={question} answer={answer} />

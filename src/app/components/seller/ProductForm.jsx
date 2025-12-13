@@ -22,17 +22,22 @@ const BASE_LAYOUT_BG = 'bg-gray-50'; // Aligned with other layouts
 
 // Define a list of categories for the dropdown
 const categories = [
-  'Snacks & Beverages',
-  'Toiletries & Personal Care',
-  'Stationery & Office Supplies',
-  'Electronics & Gadgets',
-  'Groceries & Fresh Produce',
-  'Fashion & Apparel',
-  'Home & Kitchen',
-  'Books & Media',
-  'Health & Wellness',
+  'Skin Care',
+  'Perfumes',
+  'Women’s Clothing',
+  'Men’s Clothing',
+  'Shoes',
+  'Bags & Accessories',
+  'Streetwear & Trendy',
+  'Activewear / Sportswear',
+  'Jewelry & Watches',
+  'Hair & Beauty',
+  'Kids & Baby Items',
+  'Pet Accessories',
+  'Stationery & School Supplies',
   'Other',
 ];
+
 
 export default function ProductForm({ onSubmit, initialData }) {
   const [name, setName] = useState('');
