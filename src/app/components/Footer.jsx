@@ -49,7 +49,7 @@ export default function Footer() {
 
         {/* Developer Credit */}
         <p className="mt-4 text-xs text-gray-400">
-          Developed by <strong>Kayiira Edward</strong> — <a href="https://wa.me/256746838046" className={`${ACCENT_HOVER_CLASS} underline`}>WhatsApp me</a>
+          Developed by <strong>edwardkay__</strong> — <a href="https://wa.me/256746838046" className={`${ACCENT_HOVER_CLASS} underline`}>WhatsApp me</a>
         </p>
 
         {/* Copyright */}
