@@ -161,13 +161,12 @@ export default function LoginForm() {
                         <p className="mb-6 text-lg">Your local marketplace for amazing products.</p>
                         <p className="text-sm">Join our network of sellers and connect with customers!</p>
                     </div>
-                    <div className="relative z-10 mt-8">
+                    {/* <div className="relative z-10 mt-8">
                         <p className="text-sm">Don't have an account?</p>
-                        {/* This link directs the user to a separate registration page as per your request. */}
                         <Link href="/auth?mode=register" className="font-semibold text-white hover:underline">
                             Register Here
                         </Link>
-                    </div>
+                    </div> */}
                 </div>
 
                 {/* Right Section - Login or Forgot Password Form */}
