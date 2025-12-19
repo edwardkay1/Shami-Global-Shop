@@ -17,7 +17,7 @@ const faqs = [
           <>
             Shami is your go-to for original products straight from Korea, Japan, Shein, Amazon, and Fashion Nova.  
             <strong>No other platform ships like we do.</strong> You browse, add to cart, and place your order directly via WhatsApp. We handle everything and deliver to your doorstep in ~2 weeks. 🚀  
-            Sellers register by clicking <Link href="/auth?mode=register" className={`${ACCENT_TEXT_COLOR} hover:underline`}>Become a Seller</Link> and manage their products from a personalized dashboard.
+
           </>
         ),
       },
